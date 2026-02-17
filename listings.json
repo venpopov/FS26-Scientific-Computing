@@ -1,9 +1,7 @@
 [
   {
     "listing": "/solutions.html",
-    "items": [
-      "/solutions/E001s_calculating_PI.html"
-    ]
+    "items": []
   },
   {
     "listing": "/slides.html",
@@ -15,7 +13,7 @@
   {
     "listing": "/exercises.html",
     "items": [
-      "/exercises/E001_calculating_pi.html",
+      "/exercises/E001_calculating_PI.html",
       "/exercises/E002_manipulating_strings.html",
       "/exercises/E003_rounding_numbers.html",
       "/exercises/E004_sequences.html",
