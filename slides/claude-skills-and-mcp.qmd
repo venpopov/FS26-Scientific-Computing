@@ -1,0 +1,493 @@
+---
+title: "Extending Claude Code: Skills & MCP Servers"
+author: Ven Popov
+format:
+  revealjs:
+    theme: dark
+    css: style.css
+    footer: "FS26 Scientific Computing &nbsp; | &nbsp; Claude — Skills & MCP"
+    slide-number: true
+    fig-responsive: true
+resources:
+  - assets
+---
+
+# Extending Claude Code {style="text-align: center;"}
+
+Skills & MCP Servers
+
+::: {.notes}
+- last week we treated Claude Code as a clever chat box that can read & edit files
+- today we make it grow: teach it new procedures (skills) and connect it to the outside world (MCP)
+:::
+
+## Where we left off
+
+Last week you could:
+
+- Open Claude Code in a project
+- Ask it to read, edit, and run code
+- Use the built-in tools: `Read`, `Edit`, `Bash`, `Grep`, etc.
+
+. . .
+
+Today: **two new ways to extend Claude itself**.
+
+## Two new vocab words
+
+:::: {.columns}
+::: {.column width="50%"}
+
+### Skill
+
+A bundle of **instructions** Claude can choose to load on demand.
+
+*"Here's how I want you to handle X."*
+
+Lives as a markdown file on disk.
+
+:::
+::: {.column width="50%"}
+
+### MCP server
+
+A **process** that exposes new **tools** and **data** over a standard protocol.
+
+*"Here are abilities you didn't have before."*
+
+Lives as a running program.
+
+:::
+::::
+
+. . .
+
+> Mantra: **skills are knowledge, MCPs are capabilities.**
+
+## Why bother? {.smaller}
+
+::: incremental
+- The base model is generic. *You* are not.
+- Repeated procedures → put in a skill, stop re-typing them.
+- External systems (DBs, APIs, your editor) → MCP, stop pasting screenshots.
+- Lower context cost: skills load **only when needed**.
+:::
+
+# Part 1 — Skills {style="text-align: center;"}
+
+## What is a skill, concretely?
+
+A folder. Inside: a `SKILL.md`. That's it.
+
+```
+~/.claude/skills/
+└── citation-helper/
+    ├── SKILL.md          ← required
+    └── (optional: templates, scripts, examples)
+```
+
+`SKILL.md` has YAML frontmatter + a markdown body.
+
+## The minimum `SKILL.md` {.smaller}
+
+```markdown
+---
+name: citation-helper
+description: Convert a DOI or arXiv ID into a properly formatted
+  APA citation. Use whenever the user mentions DOI, arXiv,
+  citation, references, or bibliography.
+---
+
+# How to use this skill
+
+1. Extract the identifier from the user's message.
+2. Fetch metadata from the public Crossref API.
+3. Format as APA 7 and return *only* the citation string.
+```
+
+. . .
+
+Two things matter for triggering: the **name** and the **description**.
+
+## Where skills come from (load order) {.smaller}
+
+Claude Code looks in several places. Roughly:
+
+::: incremental
+1. **Built-in** skills shipped with Claude Code (e.g. `init`, `review`, `security-review`)
+2. **User-level**: `~/.claude/skills/<name>/SKILL.md` — *yours, for every project*
+3. **Project-level**: `.claude/skills/<name>/SKILL.md` — *checked into the repo, team-shared*
+4. **Plugins**: installed plugin packages can ship skills
+:::
+
+. . .
+
+If two skills share a name, the more specific scope wins (project > user > built-in).
+
+## How does Claude *decide* to use a skill? {.smaller}
+
+At session start, Claude sees a list like:
+
+```
+Available skills:
+- pdf: Extract text, tables, and images from PDF files...
+- citation-helper: Convert DOI or arXiv ID into APA citation...
+- skill-creator: Create new skills, modify and improve existing skills...
+```
+
+. . .
+
+**Just the name + description.** Not the body.
+
+. . .
+
+When your prompt arrives, Claude matches your task against those descriptions and calls the `Skill` tool if one fits. The body loads *then*.
+
+. . .
+
+This is **progressive disclosure** — your context window stays cheap.
+
+## Two ways to fire a skill
+
+:::: {.columns}
+::: {.column width="50%"}
+
+### Auto-trigger
+
+You ask:
+
+> *Summarize page 3 of report.pdf*
+
+Claude sees `pdf` matches → loads it → uses it.
+
+:::
+::: {.column width="50%"}
+
+### Explicit
+
+You type:
+
+> `/pdf extract tables from report.pdf`
+
+Always loads the named skill.
+
+:::
+::::
+
+. . .
+
+The slash form is your safety net when auto-trigger doesn't pick the right one.
+
+## Anatomy of a good description {.smaller}
+
+**Bad:**
+
+> *Helps with documents.*
+
+. . .
+
+**Good:**
+
+> *Convert a DOI or arXiv ID into APA 7 citation. Use when the user
+> mentions DOI, arXiv, bibliography, references, or asks to format a
+> citation.*
+
+. . .
+
+Rule of thumb: **list the trigger words a user would actually say.** Claude is doing fuzzy keyword matching against your description.
+
+## Exercise A — Install & drive-test a skill {.smaller background-color="#3a2e0a"}
+
+::: {.callout-tip title="20 minutes"}
+
+1. Visit **`github.com/anthropics/skills`**
+2. Pick **one** of: `pdf`, `docx`, `xlsx`, `pptx`
+3. Copy the folder into `~/.claude/skills/`
+4. Restart Claude Code
+5. Try **auto-trigger**: ask a natural question about the sample file in the class repo
+6. Try **explicit**: invoke with `/skill-name ...`
+7. Open `SKILL.md`. Predict: would Claude trigger this for *"clean up my résumé"*? Why / why not?
+
+:::
+
+::: {.callout-note title="Pair & share"}
+Exchange one finding with a neighbour: what surprised you? Anyone get the wrong skill to fire?
+:::
+
+## Building your own — `skill-creator` {.smaller}
+
+Anthropic ships a meta-skill for this. Run:
+
+```
+/skill-creator
+```
+
+. . .
+
+Tell it what you want. It will:
+
+- pick a name
+- draft the description (the load-bearing part!)
+- scaffold the body
+- write the file to `~/.claude/skills/...`
+
+. . .
+
+Then you can edit it like any other file.
+
+## Mini-exercise — make one yourself {.smaller background-color="#3a2e0a"}
+
+::: {.callout-tip title="10 minutes"}
+
+Build a skill that automates something **you already do by hand**.
+
+Examples to seed ideas:
+
+- *"Reformat my commit messages to conventional-commits style"*
+- *"Turn my lecture notes into Anki flashcards"*
+- *"Generate a uv-style `pyproject.toml` from a list of imports"*
+
+:::
+
+::: {.callout-note title="Show & predict"}
+Show your `SKILL.md` to a neighbour. Can they predict what task will trigger it from the description alone?
+:::
+
+## Skills — recap
+
+- A folder with `SKILL.md` + optional extras
+- Loaded by **name + description** only; body is on-demand
+- Auto-triggered by content match, or invoked via `/name`
+- Scope hierarchy: built-in → user → project → plugin
+- **The description is the API.** Spend time on it.
+
+# Part 2 — MCP servers {style="text-align: center;"}
+
+## The problem skills can't solve {.smaller}
+
+A skill is *text*. It can tell Claude **what** to do, but not give it new **abilities**.
+
+. . .
+
+If you want Claude to:
+
+- Query *your* PostgreSQL database
+- Read your Gmail
+- Drive a real browser
+- Run a CAD tool
+
+. . .
+
+…it needs **code that runs**. That's MCP.
+
+## What is MCP? {.smaller}
+
+**Model Context Protocol** — an open standard from Anthropic for connecting LLMs to tools and data.
+
+::: incremental
+- A small JSON-RPC protocol over **stdio** or **HTTP**
+- Spec: `modelcontextprotocol.io`
+- Many clients: Claude Code, Claude Desktop, Cursor, Zed, custom apps
+- Many servers: filesystem, GitHub, Slack, Postgres, Playwright, … and *yours*
+:::
+
+. . .
+
+Think **USB-C for LLMs**: standard plug, anything can be on either end.
+
+## What an MCP server exposes {.smaller}
+
+Three kinds of things:
+
+| Type         | What it is                          | Example                |
+| ------------ | ----------------------------------- | ---------------------- |
+| **Tool**     | A function Claude can call          | `read_file(path)`      |
+| **Resource** | A piece of data Claude can read     | `file:///etc/hosts`    |
+| **Prompt**   | A pre-canned prompt template        | `summarize_pr(pr_id)`  |
+
+. . .
+
+In practice 90% of MCP value is **tools**.
+
+## Mental model {.smaller}
+
+```
+┌────────────────┐   stdio/HTTP    ┌─────────────────────┐
+│  Claude Code   │ ◄────JSON-RPC──►│   MCP server        │
+│  (the client)  │                  │   (your code/binary)│
+└────────────────┘                  └─────────────────────┘
+        ▲                                     │
+        │                                     │ talks to
+        │ "call read_file"                    ▼
+        │ "result: <bytes>"            ┌──────────────┐
+                                       │  filesystem, │
+                                       │  GitHub API, │
+                                       │  Postgres... │
+                                       └──────────────┘
+```
+
+The server is just a process. Claude Code spawns it (stdio) or connects to it (HTTP).
+
+## Skill vs MCP — pick one {.smaller}
+
+|                       | Skill                  | MCP server                     |
+| --------------------- | ---------------------- | ------------------------------ |
+| Lives as              | Markdown file          | Running process                |
+| Adds                  | Instructions, prompts  | Tools, data sources            |
+| Loaded                | On-demand by name      | At Claude Code startup         |
+| Implemented in        | Plain English          | Code (any language)            |
+| Needs a runtime?      | No                     | Yes                            |
+| Good for              | "How I do X"           | "Reach into system Y"          |
+
+## Adding an MCP server {.smaller}
+
+```bash
+claude mcp add <name> -- <command-to-run-the-server>
+```
+
+. . .
+
+Example — give Claude a sandboxed filesystem:
+
+```bash
+mkdir -p /tmp/student-sandbox
+claude mcp add fs -- npx -y @modelcontextprotocol/server-filesystem /tmp/student-sandbox
+```
+
+. . .
+
+Restart Claude Code. Type `/mcp` to confirm the server is connected.
+
+## Safe MCP servers to try in class {.smaller}
+
+All **stdio**, **no accounts**, **no API keys**:
+
+| Server                            | Purpose                  | Install                                                   |
+| --------------------------------- | ------------------------ | --------------------------------------------------------- |
+| `server-filesystem`               | File ops in one dir      | `npx -y @modelcontextprotocol/server-filesystem <path>`   |
+| `server-fetch`                    | HTTP GETs                | `npx -y @modelcontextprotocol/server-fetch`               |
+| `mcp-server-time`                 | Timezone-aware time      | `uvx mcp-server-time`                                     |
+| `server-sqlite`                   | Query a local SQLite DB  | `uvx mcp-server-sqlite --db-path ./classroom.db`          |
+| `context7`                        | Live library docs        | (often pre-installed via plugin)                          |
+
+. . .
+
+**Skipping in class:** GitHub, Slack, Gmail, computer-use — they need auth or have wide blast radius.
+
+## Exercise B — Wire up an MCP {.smaller background-color="#3a2e0a"}
+
+::: {.callout-tip title="10 minutes"}
+
+1. Pick two of the safe servers above
+2. Install with `claude mcp add ...`
+3. Run `/mcp` — confirm both are green
+4. Ask Claude a question only solvable with that tool:
+   - `what's the time in Auckland right now?`
+   - `list files under the sandbox`
+   - `query: SELECT count(*) FROM students;`
+5. Open `~/.claude.json` (or your `.mcp.json`) — read the actual config you just wrote
+
+:::
+
+::: {.callout-note title="Break it & fix it"}
+Kill one of the server processes (`pkill -f mcp-server`). What does Claude say next time you ask? Recover.
+:::
+
+## When MCP gets dangerous {.smaller}
+
+The protocol itself is fine; the *server* is the question.
+
+::: incremental
+- **Auth scope creep**: a GitHub MCP with full write access can `git push --force` to main.
+- **Network MCPs**: a `fetch` server can hit *any* URL — including internal IPs.
+- **Filesystem**: `server-filesystem /` is a terrible idea; always scope to a directory.
+- **Computer-use** (the desktop control one): full control of your mouse/keyboard.
+:::
+
+. . .
+
+**Principle of least authority.** Same rules as adding a Chrome extension — what is it allowed to touch?
+
+## Where MCP configs live {.smaller}
+
+- **User-wide:** `~/.claude.json` — applies to every Claude Code session
+- **Project-wide:** `.mcp.json` at repo root — shared with teammates via git
+- The `claude mcp add` CLI just edits these files for you
+
+. . .
+
+A repo can pin its required MCPs. New contributors run `claude mcp install` and they're up.
+
+## Building your own MCP server {.smaller}
+
+Two easy starting points:
+
+1. The official skill **`mcp-builder`** — scaffolds a server from a spec.
+2. `npm create mcp-server` or `uv` + `mcp` Python SDK.
+
+. . .
+
+Server skeleton (Python):
+
+```python
+from mcp.server.fastmcp import FastMCP
+mcp = FastMCP("my-toy")
+
+@mcp.tool()
+def add(a: int, b: int) -> int:
+    return a + b
+
+mcp.run()
+```
+
+. . .
+
+That's a working MCP server. `claude mcp add toy -- python my_server.py` and you can call `add` from Claude.
+
+## Recap — Skills vs MCP {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+
+### Reach for a skill when…
+
+- the answer is *instructions*
+- you want it triggered by topic
+- you want it on-demand & cheap
+- it's shareable as a file
+
+:::
+::: {.column width="50%"}
+
+### Reach for an MCP when…
+
+- you need *new tools*
+- you need to talk to a running system
+- you have code that already does the thing
+- you want it available every session
+
+:::
+::::
+
+## Homework
+
+1. **One skill.** Automate something you actually did this week. ≤ 30 lines of body.
+2. **One MCP.** Add a server beyond the ones we tried in class. Write a paragraph: *what new tasks does it unlock and what risks does it bring?*
+3. Submit both as a PR to your fork of the class repo.
+
+. . .
+
+Due: next week's session.
+
+## Resources {.smaller}
+
+- Skills repo: [github.com/anthropics/skills](https://github.com/anthropics/skills)
+- MCP spec: [modelcontextprotocol.io](https://modelcontextprotocol.io)
+- MCP server registry: [github.com/modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers)
+- Claude Code docs: [docs.claude.com/claude-code](https://docs.claude.com/claude-code)
+
+. . .
+
+::: {.callout-note title="Q&A"}
+Open floor — what would you want to extend Claude with for *your* projects?
+:::
