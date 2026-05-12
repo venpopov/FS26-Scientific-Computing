@@ -1,0 +1,566 @@
+---
+title: "Claude Code Skills — A Student Handout"
+---
+
+A companion to the in-class slides (`slides/claude-skills-and-mcp.qmd`). The
+slides showed you what skills *are* and walked through a few examples that
+ship inside Claude. This handout is the next step: a curated catalogue of
+real skills you can install and read, a brainstorming framework for
+inventing your own, a workflow for testing and refining them, and a section
+on *meta-skills* — skills that watch how you work and propose new skills
+back to you.
+
+It is meant to be lived with, not read once. Bookmark it, return to it,
+suggest additions.
+
+---
+
+## §1 — Why this exists
+
+In class we hit two snags. First, the example skills in the slides
+(`pdf`, `docx`, `pptx`, `xlsx`, `skill-creator`, `init`) ship as built-ins
+inside Claude Code, so installing them as a learning exercise is a no-op —
+you can't see them appear because they were already there. Second,
+several of you said you couldn't picture *what skills you'd even want to
+build*, which is fair: skill ideas come from friction, and friction comes
+from experience. You've only had a few hours of experience.
+
+This document tries to short-circuit both:
+
+- **Concrete starting points** (§2–§3) — places to land and a table of
+  ~30 real, externally-built, non-trivial skills with use-case
+  framings sourced from the underlying repos.
+- **Imagination unlock** (§4) — four lenses for spotting where your own
+  workflow is asking to be skill-ified, with worked examples from skills
+  we use daily in another context.
+- **Iteration discipline** (§5) — a workflow for after-use debriefs so
+  that skills get sharper with every invocation rather than rotting.
+- **Meta-skills** (§6) — skills whose job is to make your other skills
+  better.
+- **Cheatsheet** (§7) — the structural minimum of a SKILL.md.
+
+How to read it: §3 is the catalogue, useful as a browsing surface. §4 is
+the part to work *through* with your own life in mind. §5 and §6 are the
+parts that turn skill-writing from a one-shot novelty into a practice.
+
+---
+
+## §2 — Where to start: three landing pages
+
+Three URLs to open first. Everything else is downstream of these.
+
+**1. [`anthropics/skills`](https://github.com/anthropics/skills) — the
+official canon.** Beyond the doc-format skills you saw in the slides,
+this repo contains a dozen-plus skills worth reading purely to see what
+*good* SKILL.md files look like. Pay particular attention to
+`slack-gif-creator` (Simon Willison's favourite teaching example —
+notice how it teaches Claude *primitives* like easing and layering
+rather than handing it templates), `mcp-builder` (scaffolds new MCP
+servers — itself a skill that builds tools), `algorithmic-art` (seeded
+p5.js generative art), and `frontend-design` (opinionated UI generation
+that picks aesthetic directions instead of defaulting to generic
+Tailwind). Install via `/plugin marketplace add anthropics/skills`.
+
+**2. [`VoltAgent/awesome-agent-skills`](https://github.com/VoltAgent/awesome-agent-skills)
+— the largest hand-curated index.** The "awesome list" pattern (a
+GitHub convention: a curated, opinionated list of links) applied to
+skills. VoltAgent's list filters AI-slop entries, organises by domain,
+and is cross-agent (skills written for Claude often map cleanly to
+Cursor or Gemini). Honourable mentions:
+[ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills)
+(taxonomy-driven), [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)
+(progressive-disclosure structure), and the tag-faceted browser at
+[awesome-skills.com](https://awesome-skills.com/).
+
+**3. [`K-Dense-AI/scientific-agent-skills`](https://github.com/K-Dense-AI/scientific-agent-skills)
+— most relevant for this course.** ~135 SKILL.md files across 16
+scientific domains: bioinformatics (Scanpy, scVelo, RDKit), neuro,
+astronomy (Astropy, FITS), GIS, materials science, plus 78+ scientific
+database connectors. For most of you doing scientific computing, this
+is the single most directly applicable repo on the internet right now.
+
+For "why skills exist at all" reading, try
+[Simon Willison's *Claude Skills are awesome*](https://simonwillison.net/2025/Oct/16/claude-skills/),
+[Jesse Vincent's *Skills for Claude!*](https://blog.fsck.com/2025/10/16/skills-for-claude/),
+and [Nick Nisi's *Why Everyone Should Try Claude Skills*](https://nicknisi.com/posts/claude-skills/).
+For the contrarian view, the
+[Hacker News thread #45607117](https://news.ycombinator.com/item?id=45607117)
+includes skeptics arguing skills are "a design pattern, not a hard spec."
+Read all four — being able to articulate the strongest objection is part
+of understanding what you're working with.
+
+---
+
+## §3 — Skill catalogue
+
+A reference table of ~30 real, externally-built skills, grouped by
+domain. All URLs were live-verified at time of writing. The
+**Use case** column is one-sentence and concrete; the **Why
+interesting** column is one phrase and pedagogical — what's the *idea*
+the skill teaches you.
+
+### Official Anthropic standouts
+
+These are the closest examples to the in-class material. Read the
+SKILL.md of any of them to see the canonical structure.
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `slack-gif-creator` | [anthropics/skills](https://github.com/anthropics/skills) | Build animated GIFs under Slack's 2 MB cap with easing, layering, and palette control. | Teaches generation primitives, not templates — the skill body is *concepts*. |
+| `mcp-builder` | [anthropics/skills](https://github.com/anthropics/skills) | Scaffolds well-formed MCP servers from an API description. | A skill that builds tools; example of skills as meta-tooling. |
+| `algorithmic-art` | [anthropics/skills](https://github.com/anthropics/skills) | Generates p5.js algorithmic art with seeded randomness, flow fields, particle systems. | Reproducible parametric art; clean introduction to seeded randomness. |
+| `webapp-testing` | [anthropics/skills](https://github.com/anthropics/skills) | Automates end-to-end web app testing with assertions and visual regression. | Replaces manual QA scripting with an autonomous test loop. |
+| `frontend-design` | [anthropics/skills](https://github.com/anthropics/skills) | Generates component designs from wireframes; picks an aesthetic direction. | Shows that skills can encode taste, not just procedure. |
+| `brand-guidelines` | [anthropics/skills](https://github.com/anthropics/skills) | Enforces visual and tonal consistency across multimodal outputs. | Demonstrates a skill that scales a designer's review judgment. |
+
+### Methodology and dev practice
+
+Bundles that read more like style guides than tools. Worth skimming even
+if you don't install them.
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `obra/superpowers` | [obra/superpowers](https://github.com/obra/superpowers) | Methodology library: TDD enforcement, systematic-debugging, executing-plans, parallel agent dispatch, brainstorming, writing-plans. | Treats engineering practice as packageable; a master class in skill design. |
+| `trailofbits/skills` | [trailofbits/skills](https://github.com/trailofbits/skills) | Security research skills: `semgrep-rule-creator`, `yara-authoring`, `constant-time-analysis`, `supply-chain-risk-auditor`. | Polished narrow-domain reference from a respected security firm. |
+
+### Academic and research
+
+Closest to your day-to-day as scientific-computing students.
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `yy/claude-scholar` | [yy/claude-scholar](https://github.com/yy/claude-scholar) | Slash commands for academic work: `/arxiv-metadata`, `/doi-bibtex`, `/check-refs` (validates LaTeX citations against databases), `/critique-figures`, `/critique-manuscript`. | Encodes a senior researcher's pre-submission checklist. |
+| `54yyyu/zotero-mcp` | [54yyyu/zotero-mcp](https://github.com/54yyyu/zotero-mcp) | Semantic search and metadata retrieval over a local Zotero library; auto-fetch by DOI. | "Chat with your library" without sending your reading list to the cloud. |
+| `pedrohcgs/claude-code-my-workflow` | [pedrohcgs/claude-code-my-workflow](https://github.com/pedrohcgs/claude-code-my-workflow) | Multi-skill bundle for LaTeX/Beamer + R academics: `/translate-to-quarto`, `/audit-reproducibility` (numeric claim ↔ code consistency), `/respond-to-referees`, `/preregister`. | A whole academic production pipeline in one repo; great structural reference. |
+| `K-Dense-AI/scientific-agent-skills` | [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 135+ scientific domain skills: cheminformatics, single-cell, astronomy, geospatial, materials. | Encodes deep specialised knowledge across fields without per-tool integrations. |
+| `GPTomics/bioSkills` | [GPTomics/bioSkills](https://github.com/GPTomics/bioSkills) | 450 skills across 63 bioinformatics categories: FASTQ processing, variant calling, GWAS, scRNA-seq, ChIP-seq, metagenomics. | Sheer breadth — useful as inspiration for what a maximalist domain library looks like. |
+
+### Knowledge management and notes
+
+For students who already keep notes systematically (or want to start).
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `kepano/obsidian-skills` | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Teaches Claude Markdown, Obsidian Bases, JSON Canvas, and the Obsidian CLI. | Written by Obsidian's CEO — high-quality reference for tool-encoding skills. |
+| `eugeniughelbur/obsidian-second-brain` | [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain) | 31 commands plus four scheduled overnight agents (morning, nightly, weekly review, vault audit) that maintain your vault asynchronously. | Skills can do what plugins can't because they have shell access; great example of background work. |
+| `vystrcild/claude_code_journaling` | [vystrcild/claude_code_journaling](https://github.com/vystrcild/claude_code_journaling) | Analyses daily journal entries through six analytical lenses (therapist, coach, relationships, strengths, values, chronicler) to a monthly synthesis. | Surfaces patterns across months without explicit retrospective effort. |
+| `adagradschool/cc-gtd` | [adagradschool/cc-gtd](https://github.com/adagradschool/cc-gtd) | Full Getting Things Done implementation: capture, weekly review, project status, context-based next actions. | Encodes a methodology (David Allen's GTD) as a skill — useful pattern. |
+| `readwiseio/readwise-skills` | [readwiseio/readwise-skills](https://github.com/readwiseio/readwise-skills) | Eleven skills for a Readwise subscriber: feed triage, comprehension quizzes, highlight-graph visualisation, "now reading" page, persona builder. | Published by Readwise themselves — example of vendors shipping first-party skills. |
+
+### Personal life and home
+
+Skills for the parts of your life that aren't class.
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `densign01/grocery-list-skill` | [densign01/grocery-list-skill](https://github.com/densign01/grocery-list-skill) | Parses a meal plan with recipe URLs, scrapes ingredients via headless Chromium, pushes to Apple Reminders. | Handles JS-heavy recipe sites that defeat naive curl/fetch. |
+| `dmorrill/cooking-with-claude` | [dmorrill/cooking-with-claude](https://github.com/dmorrill/cooking-with-claude) | Inventory-aware meal suggestion ("what can I cook tonight?") with expiry tracking and prep coordination. | A skill that takes the *state of your kitchen* as input — non-trivial domain. |
+| `felixrieseberg/claude-coach` | [felixrieseberg/claude-coach](https://github.com/felixrieseberg/claude-coach) | Personalised marathon/triathlon training plans via Strava integration; accommodates injury and travel. | Adapts to individual fitness and life disruptions, not generic templates. |
+| `d-wwei/trip-planner` | [d-wwei/trip-planner](https://github.com/d-wwei/trip-planner) | Eight-step self-drive itineraries: verified drive times, interactive Leaflet maps, weather-aware packing, offline fallbacks. | Web-verifies driving times to correct LLM 30–50% optimism bias — concrete error-correcting design. |
+
+### Hobby and creative
+
+Where the most charm tends to live.
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `Bobby-Gray/claude-dnd-skill` | [Bobby-Gray/claude-dnd-skill](https://github.com/Bobby-Gray/claude-dnd-skill) | AI Dungeon Master for D&D 5e; initiative, NPC voices, HP/XP tracking, both 2014 and 2024 rulesets, persistent campaigns. | Stateful narrative across sessions — the skill body persists campaign state. |
+| `Sstobo/Claude-Code-Game-Master` | [Sstobo/Claude-Code-Game-Master](https://github.com/Sstobo/Claude-Code-Game-Master) | Vectorises any RPG rulebook with ChromaDB; sub-agents for combat, spells, loot, NPCs ground every scene in source passages. | Composable: bring your own rulebook, the skill grounds itself in it. |
+| `m98/fluent` | [m98/fluent](https://github.com/m98/fluent) | Spaced-repetition language tutor (SM-2 algorithm), adaptive difficulty targeting 60–70% success, six practice modes. | Applies real learning science (spacing + retrieval) without cloud tracking. |
+| `JuliusBrussee/caveman` | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | Compresses Claude's outputs by ~65% via caveman-grammar mode; intensity dials from `lite` to `wenyan`. | Funny, but a real lesson: skills can be *negative*-content, removing rather than adding. |
+| `Donchitos/Claude-Code-Game-Studios` | [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) | Simulates a game studio: 49 agents and 72 skills covering design, programming, art/audio, QA, production, narrative. | Maximalist orchestration example — useful even just to see how big a skill library can grow. |
+
+### Professional non-developer
+
+Examples of skills written for non-coding professional work.
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `evolsb/claude-legal-skill` | [evolsb/claude-legal-skill](https://github.com/evolsb/claude-legal-skill) | First-pass contract review with CUAD-tagged risk detection, market-benchmark redlines, role-aware negotiation language (NDA, SaaS, M&A). | Encodes a domain expert's review process; pair with the [Artificial Lawyer write-up](https://www.artificiallawyer.com/2026/03/02/lawyer-uses-claude-skills-legal-world-loses-it/). |
+
+### Curated lists (good for browsing)
+
+If the catalogue above runs out, these are the indices to keep going from.
+
+| Name | Source | Use case | Why interesting |
+|------|--------|----------|-----------------|
+| `VoltAgent/awesome-agent-skills` | [github.com/VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) | 1000+ verified skills, hand-curated, AI-slop filtered, cross-agent. | Quality-first curation model. |
+| `ComposioHQ/awesome-claude-skills` | [github.com/ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | 12+ categories, hybrid official + community, with explicit "when to use" guidance. | Taxonomy-driven model; good if you prefer browsing by problem rather than by tool. |
+| `travisvn/awesome-claude-skills` | [github.com/travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | Tighter list with decision matrices ("Skills vs Other Approaches") and troubleshooting. | Pragmatic, actively maintained. |
+
+---
+
+## §4 — Brainstorming: spotting your own skill ideas
+
+This is the section to work *through*, not just read. The catalogue tells
+you what others built; this tells you how to find what *you* should
+build. Four lenses, each with a worked example from skills we use daily
+in a different project.
+
+A note on the worked examples: they come from a separate codebase (the
+VADE project) where I've spent the last year building out a skill
+library for a long-running agent. The skills are project-specific —
+don't worry about the names — but the *patterns* transfer. They're here
+because they're worked solutions to friction points, and seeing real
+solutions makes the lenses easier to apply to your own life.
+
+### Lens 1 — The Boring Repeat Tax
+
+What do you do every week that's about 80% structure and 20% judgment?
+The structure part is the skill; the judgment part is what Claude needs
+your input on. If you can describe the structure in two paragraphs, you
+have a SKILL.md draft.
+
+**Worked example:** the VADE project ships a `day-overview` skill. Every
+day a long-running agent does some mix of memo-writing, PR-opening,
+file-editing, conversations. At the end of the day, *what shipped?* is a
+question you don't want to reconstruct from scratch. The skill walks
+through GitHub commits, merged PRs, and decision memos from the day,
+classifies them into "wrote", "shipped", "decided", "blocked", and
+returns a structured briefing. The judgment part is what Claude
+prioritises in the summary; the structure part is the data sources, the
+classification scheme, and the output template — all encoded once in
+the skill.
+
+For you as a student: what's the weekly structure you keep doing by
+hand? A reading-list update? A homework summary? A lab-notebook entry?
+A chore log?
+
+### Lens 2 — The Expertise Embedding
+
+What do you have such strong opinions about that a generic prompt would
+produce something *wrong*? Wherever you have idiosyncratic standards,
+Claude needs to be told them. The skill body is where that knowledge
+lives.
+
+**Worked example:** the VADE project ships a `request-briefing` skill
+that generates context-handoff documents between work sessions. The
+*idiosyncratic* part is the format — what sections, what level of
+detail, what verification ritual at the end, which related artifacts to
+link. None of those choices are obvious; they're the result of fifty
+sessions where the next session got confused because the wrong context
+was carried forward. The skill is the cumulative residue of those
+mistakes, packaged as a template + an enforcement layer.
+
+For you: what are the conventions in your discipline that "everyone
+just knows" but Claude doesn't? APA-style results reporting? A specific
+plotting palette? The way your advisor wants commit messages? The
+preregistration fields your lab requires? Each of those is a skill.
+
+### Lens 3 — The Documentation Hole
+
+When working with a new framework or library, do you keep re-asking
+"where is X documented?" or finding that Claude hallucinates API
+signatures? The fix is a docs skill: a SKILL.md that teaches Claude
+where to fetch the *real* docs efficiently, and what the common
+landmines are.
+
+**Worked example:** the VADE project ships a `quarto-docs` skill. Quarto
+is a publishing system whose docs live at `quarto.org`. The naive thing
+is to just let Claude search the web; the problem is that Quarto
+publishes LLM-optimised markdown bundles at `quarto.org/llms.txt` and
+per-page `.llms.md` URLs, and *if you don't tell Claude that*, it'll
+fetch HTML, hallucinate YAML keys, or nest options under the wrong
+parent (`format.html.sidebar` is wrong; `sidebar` is top-level under
+`website`). The skill is one paragraph saying "for Quarto questions,
+fetch from these URLs in this order; here are three landmines we've
+hit." That's it.
+
+**The generalisable move**: if you're working with a framework or
+library that doesn't already have a docs skill, you can build one in 30
+minutes. Some big ones already have them (`tldraw`, `Cloudflare
+Workers`, the Anthropic SDK). For everything else — your favourite R
+package, your numerical library, your astronomy toolkit — you might be
+the first person to package its docs as a skill. That's a publishable
+contribution to the community.
+
+### Lens 4 — The Ritual / Bookend
+
+What do you always want to do at the start or end of something — a
+session, a project, a publishing cycle — but keep forgetting parts of?
+Bookend rituals are perfect skill material because the structure is
+deterministic and the friction is forgetting.
+
+**Worked example:** the VADE project ships an `end-session` skill. At
+the end of every working session you want to commit pending changes,
+write a session log, save a working-memory note, sync the semantic
+index if memos changed, and consider whether anything from the session
+should be externalised as a new skill or operations doc. Doing all six
+manually means at least one gets dropped most sessions. The skill is a
+checklist: each step runs in order, each is reported, the skill writes
+a marker file that suppresses other end-of-session prompts. It turns a
+fragile ritual into a reliable one.
+
+For you: what's your end-of-coding-session ritual? Commit, push, write
+a TODO for tomorrow, close the laptop. What's your start-of-paper
+ritual? Pull literature, scaffold sections, set up the bibliography,
+pre-register. Whatever it is — if you keep forgetting parts of it,
+that's a skill.
+
+### Domain-by-domain prompts
+
+For each of the lanes below, ask yourself the listed questions. Even one
+"yes" is a skill candidate.
+
+**Research.** What's your literature-review tax? Citation-chasing
+friction? Notebook hygiene before you forget what a cell does?
+Reproducibility audit before submitting? Pre-registration drafting?
+Statistical-reporting conformance (do all your `t(df) =` and effect
+sizes show up?)?
+
+**Writing.** Voice consistency across a long document? Citation
+formatting per journal? Reformatting a Beamer deck as Quarto? Drafting
+a referee response? Generating an alt-text pass for accessibility?
+
+**Personal.** Email triage with reply drafting in your voice (drafts
+only, never auto-sent)? Meal planning from what's in your fridge? Trip
+prep with weather-aware packing? Gift-list management? Birthday
+reminders with context on what each person likes?
+
+**Hobby.** Rule-grounded play (D&D, board games, chess analysis)?
+Spaced-repetition for any skill you're learning? Coaching for fitness or
+music practice? Plant-care logging? A cooking-from-the-pantry brain?
+
+**Teaching.** Rubric-grading with explicit criteria? Quiz generation
+from lecture notes? Exam scaffolding with point distributions? Office-
+hours triage that points students at the right resource?
+
+### Three meta-prompts
+
+If none of the lenses are biting, try these three abstract questions:
+
+1. **"What would I delegate to a smart intern who doesn't know my
+   context?"** The SKILL.md is the briefing you'd write that intern.
+2. **"What context do I reload into Claude every time I start a session
+   about X?"** That repeated context is the skill body.
+3. **"What did I fix in Claude's output the last three times in the
+   same way?"** Whatever you keep correcting is the enforcement layer
+   the skill needs.
+
+---
+
+## §5 — Iterating on a skill: the author–test–refine loop
+
+Authoring a skill is the first ten percent. The other ninety is testing
+it, watching it fail, and refining it. Treat it as a four-step loop you
+run after every meaningful invocation.
+
+### A. First-use observation
+
+Did Claude actually invoke the skill when you expected it to? Did you
+have to nudge ("use the skills/foo skill")? If you nudged, the
+**description is wrong** — either too narrow (didn't match the situation)
+or too vague (model didn't recognise the trigger). Description quality
+is the single biggest determinant of whether a skill fires reliably.
+
+Did the skill body actually help, or did Claude essentially do its
+default behaviour anyway? If the latter, ask whether the skill has a
+job at all — if Claude's defaults already cover it, the skill is
+redundant.
+
+### B. After-use debrief — ask the model directly
+
+After the task is done, run this prompt against Claude with the
+session still loaded. It works best because the model can introspect
+on what just happened.
+
+::: {.callout-tip title="Skill debrief prompt"}
+We just used the `<skill-name>` skill on `<task>`. Walk me through:
+
+1. Which parts of the SKILL.md were actually load-bearing for solving
+   the task?
+2. What was in the SKILL.md that I ignored or didn't need?
+3. What did I wish was in there but wasn't — what would have made the
+   task easier?
+4. Did the description accurately match the task, or was the trigger
+   loose / tight?
+5. If you were rewriting this skill from scratch based on this one
+   use, what would you change?
+
+Be specific — quote phrases from the SKILL.md you're talking about.
+:::
+
+The model will give you concrete, line-level suggestions about its own
+behaviour. Take them with a grain of salt (it's introspecting, not
+remembering perfectly), but treat the suggestions as a strong prior.
+Edit the SKILL.md immediately while the use case is fresh.
+
+### C. The drift check
+
+Skills age. Anthropic ships model updates monthly; what was load-bearing
+a month ago might be table stakes the model now does by default.
+Reverse: a skill that worked great might stop firing because the
+description vocabulary no longer matches how the model categorises
+tasks.
+
+Every few weeks, take an old skill you haven't touched. Try to invoke it
+on a task you know it should match. Did it fire? Did it work? If not,
+prune the description, prune the body, or retire the skill.
+
+### D. Split, retire, or fold
+
+When a skill grows past one job, **split** it. A SKILL.md that does
+"PDF analysis *and* OCR *and* citation extraction" should be three
+skills, each with a tight description.
+
+When two skills overlap so much that you forget which one to invoke,
+**fold** one into the other.
+
+When a skill stops firing for three weeks running, ask whether the
+trigger is wrong (rewrite the description) or the need has gone away
+(**retire** it). Dead skills clutter the model's selection space.
+
+### Common pitfalls
+
+A short list of failure modes worth recognising:
+
+- **Description too generic.** Fires on everything; pollutes the skill
+  selection. Fix: name the *trigger condition* concretely. "Use when
+  editing Quarto frontmatter" beats "Use for documentation work."
+- **Description too specific.** Never fires because the model doesn't
+  categorise tasks the way you do. Fix: include synonyms and example
+  triggers.
+- **Body duplicates Claude's defaults.** Adds nothing the model wouldn't
+  do anyway. Fix: focus the body on what's *non-obvious* — the
+  landmines, the conventions, the references you'd otherwise have to
+  re-explain.
+- **Wraps a script that isn't tested.** The skill calls
+  `scripts/foo.sh` but no one runs the script directly. When it breaks,
+  the skill silently fails. Fix: keep the script runnable on its own
+  and test it independently.
+- **Hidden environment dependency.** "Just install
+  `imagemagick` and `ffmpeg` and `pandoc` and …" If it's not in the
+  default environment, document it loudly at the top of the SKILL.md.
+
+---
+
+## §6 — Meta-skills: skills that improve other skills
+
+This is the part most people miss. Once you have a few skills, the next
+move isn't to write more skills — it's to write skills *about* your
+skills. Meta-skills make the skill-writing practice scale.
+
+### What a meta-skill does
+
+A meta-skill takes the place of you-the-author. Instead of you running
+the §5 debrief loop manually, a meta-skill watches what just happened,
+asks the right questions, and suggests improvements (or proposes new
+skills). Three concrete patterns:
+
+**1. The skill-debrief skill.** Wraps the §5.B prompt as an invocable
+skill. After any non-trivial task, type `/skill-debrief` and the skill
+walks Claude through its own retrospective: which skills fired, which
+should have but didn't, where you nudged manually, what was missing.
+The output is a structured note you can paste into a `skills-ideas.md`
+or directly into a SKILL.md edit. Saves you the cognitive load of
+remembering to debrief.
+
+**2. The skill-creator skill.** This one ships with Claude Code as
+`/skill-creator`. It's a meta-skill in the strongest sense: it walks you
+through *authoring* a new skill — interrogating you for the trigger
+condition, drafting the description, scaffolding the body, registering
+the file in the right directory. Use it. Even when you think you know
+the skill you want to write, having Claude interview you about the
+edge cases produces a tighter SKILL.md than typing one from scratch.
+
+**3. The friction logger.** A skill (or a hook) that watches your
+session for *unrecognised* friction — moments where you re-explained
+the same context, where you reached for a CLI Claude doesn't know
+about, where you fixed the same kind of output twice. At end of session
+it produces a list: "you did X three times, consider packaging it." The
+VADE project does a version of this in its `end-session` ritual: one
+of the steps is "did anything in this session produce a recurring
+pattern, repeated friction, or transferable insight that future
+sessions would benefit from having pre-packaged?" If yes, file an issue
+or invoke the skill-creator. The emancipatory logic is straightforward:
+giving back to the substrate is part of using it well.
+
+### Why meta-skills matter
+
+Without meta-skills, your skill library grows linearly with your
+attention budget — you only add skills when you happen to remember to.
+With meta-skills, your library grows from *every session you don't
+remember*, because the meta-skill is doing the noticing. The meta-skill
+is the part of your future that watches your present.
+
+### The simplest meta-skill you can write today
+
+Open a file `~/skills-ideas.md`. Whenever you finish a coding session,
+ask Claude:
+
+> "Looking at what we just did, are there any 5-minute improvements I
+> could make to my skills? Anything I re-explained, anything you
+> fumbled, anything I corrected more than once? Write it as a list of
+> proposed skill ideas with one-sentence descriptions, and append to
+> `~/skills-ideas.md` if I confirm."
+
+That's not a packaged skill yet — it's a manually-invoked prompt — but
+it's the seed. Once you've appended a dozen ideas, package the prompt
+itself as `/skills-debrief` and the practice becomes durable.
+
+### Meta-skills as a research direction
+
+This area is genuinely under-explored. Most published skills are
+object-level (do task X). Few are reflexive (improve other skills X).
+If you wanted a small student project that would be a real
+contribution to the community, building a polished `/skill-debrief` or
+`/skill-drift-check` and publishing it as a repo would be a good one.
+The lens 4 example earlier (`end-session`) is in this category, and so
+is the official `/skill-creator` — but the space between them is wide
+open.
+
+---
+
+## §7 — Cheatsheet appendix
+
+The structural minimum to write a skill.
+
+### SKILL.md frontmatter
+
+```yaml
+---
+name: my-skill-slug
+description: Use when [trigger condition]. [What the skill does in one
+  sentence — make sure the trigger words a model would naturally reach
+  for are present.]
+---
+```
+
+### Where skills live
+
+- **User-level**: `~/.claude/skills/<skill-name>/SKILL.md` — available
+  in every project.
+- **Project-level**: `.claude/skills/<skill-name>/SKILL.md` in the
+  repo — checked in, shared with collaborators.
+- **Plugins**: `/plugin marketplace add <github-owner>/<repo>` then
+  `/plugin install <plugin-name>` — for skills shipped as marketplace
+  bundles (this is how `anthropics/skills` works).
+
+### Description-writing micro-rules
+
+1. **Lead with the trigger condition** ("Use when…" / "Trigger
+   on…"). The model selects skills by matching the description to the
+   current task.
+2. **Name synonyms.** If you call it "literature review" and the user
+   says "lit review", the skill might miss. Include both.
+3. **State what the skill is *not* for** if there's a near-miss skill
+   it shouldn't poach from.
+
+### Capture mechanism for skill ideas
+
+A `~/skills-ideas.md` file. One line per idea, written the moment it
+occurs. Don't let the perfect SKILL.md be the enemy of the noticed
+friction.
+
+### Further reading
+
+- [Claude Code skills documentation](https://docs.claude.com/en/docs/claude-code/skills)
+- [Anthropic Engineering blog on skills](https://www.anthropic.com/news)
+- [Simon Willison's Claude Code coverage](https://simonwillison.net/tags/claude-code/)
+
+---
+
+*This handout is meant to evolve. If you find a skill not in the
+catalogue, a lens not in the brainstorming section, or a refinement to
+the iteration workflow, propose an edit. Skill-writing is itself a
+skill; this document should improve as we do.*
