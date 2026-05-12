@@ -2,6 +2,7 @@
 title: "calculating PI"
 author: "Hubert Baechli"
 date: "2025-03-01"
+draft: true
 ---
 
 ```{r setup, include=FALSE}
