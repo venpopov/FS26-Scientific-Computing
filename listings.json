@@ -2,6 +2,10 @@
   {
     "listing": "/solutions.html",
     "items": [
+      "/solutions/E002s_manipulating_strings.html",
+      "/solutions/E003s_rounding_numbers.html",
+      "/solutions/E004s_sequences.html",
+      "/solutions/E005s_curves_plots.html",
       "/solutions/E001s_calculating_PI.html"
     ]
   },

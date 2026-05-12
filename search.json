@@ -4,7 +4,7 @@
     "href": "solutions.html",
     "title": "Solutions to exercises",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nMar 1, 2025\n\n\ncalculating PI\n\n\nHubert Baechli\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nMar 8, 2025\n\n\nE002: Manipulating strings\n\n\nHubert Baechli\n\n\n\n\n\n\nMar 8, 2025\n\n\nE003: Numbers & rounding them\n\n\nHubert Baechli\n\n\n\n\n\n\nMar 8, 2025\n\n\nE004: Vectors & Sequences\n\n\nHubert Baechli\n\n\n\n\n\n\nInvalid Date\n\n\nE005: Curves & Plots\n\n\nHubert Baechli\n\n\n\n\n\n\nMar 1, 2025\n\n\ncalculating PI\n\n\nHubert Baechli\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html",
@@ -434,6 +434,55 @@
     "text": "Resources\n\nSkills repo: github.com/anthropics/skills\nMCP spec: modelcontextprotocol.io\nMCP server registry: github.com/modelcontextprotocol/servers\nClaude Code docs: docs.claude.com/claude-code\n\n\n\n\n\n\n\n\n\nQ&A\n\n\nOpen floor — what would you want to extend Claude with for your projects?"
   },
   {
+    "objectID": "solutions/E003s_rounding_numbers.html",
+    "href": "solutions/E003s_rounding_numbers.html",
+    "title": "E003: Numbers & rounding them",
+    "section": "",
+    "text": "Below are some exercises that should help you learn the most important basic built in functions and how to incorporate them into your own functions. This sheet focuses on numbers and how they could rounded.\n\n\nas you already know, you can do simple math with R\n\nx &lt;- 4\ny &lt;- 2\nz &lt;- x * y ** 2\nz\n\n[1] 16\n\n\nBut R can do almost everything that can be done with numbers, also with vectors of numbers.\n\nx &lt;- c(4, 3)\nz &lt;- x * y ** 2\nz\n\n[1] 16 12\n\n\nAnd it becomes even easier when you wrap it in functions. So create a function that performs the calculation shown above.\n\ncalc_z(x = 2, y = 4)\n\n[1] 32\n\n\n\n\n\n\n\n\nWarningHint:\n\n\n\nYour function should also work with vectors or with combinations of numbers and vectors\n\ncalc_z(x = c(4, 3), y = 2)\n\n[1] 16 12\n\ncalc_z(x = c(4, 3), y = c(1, 2))\n\n[1]  4 12\n\n\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\ncalc_z &lt;- function(x, y) {\n   x * y ** 2\n}\n\n\n\n\n\n\nYou used already the round function, may with such a line\n\nround(pi, 2)\n\n[1] 3.14\n\n\nR is very flexible and has interpreted this as follows:\n\nround(x = pi, digits = 2)\n\n[1] 3.14\n\n\nBut R also has many other built-in functions, such as rounding up.\n\nceiling(x = pi)\n\n[1] 4\n\n\nGuess the function which is rounding down ;-)\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nfloor(x = pi)\n\n[1] 3\n\n\n\n\n\n\n\nTo my knowledge, there is no built-in function that checks whether a number is even or odd.\nBut we can write one ourselves.\n\n\n\n\n\n\nNoteUse may this:\n\n\n\nTry to use the integer operators for the solution.\n\n5 %% 2\n\n[1] 1\n\n5 %/% 2\n\n[1] 2\n\n\n\n\nYou should write a function is_even which returns TRUE or FALSE:\n\n\n\n\n\n\nWarningHint:\n\n\n\nFill out the body of the function below\n\nis_even &lt;- function(x) {\n  # something goes here\n}\n\n\n\n\nis_even(x = 4)\n\n[1] TRUE\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nis_even &lt;- function(x) {\n   x %% 2 == 0\n}\n\n\n\n\n\n\nYou will often find that you need to round something not to the nearest whole number, but to some other part of a number. For example, grades are often rounded to the nearest half - 4.5, 5, 5.5, 6… Unfortunately we cannot use round directly for this and we’ll have to be a bit more clever.\nWrite a function that will round a number to the nearest half.\n\nround_to_half(pi)\n\n[1] 3\n\nround_to_half(5.21)\n\n[1] 5\n\nround_to_half(5.42)\n\n[1] 5.5\n\nround_to_half(5.57)\n\n[1] 5.5\n\nround_to_half(5.78)\n\n[1] 6\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nround_to_half &lt;- function(x) {\n  round(x * 2) / 2\n}\n\n\n\n\n\n\nAnd just like the built-in functions, it would be nice if this also works with vectors. Check if your function works with vector input. If it doesn’t, why is that? And what can you do to make it work with vectors?\n\nraw_grades &lt;- c(3.35, 5.87, 2.24, 5.9, 4.45, 5.34)\nround_to_half(raw_grades)\n\n[1] 3.5 6.0 2.0 6.0 4.5 5.5\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nround_to_half &lt;- function(x) {\n  round(x * 2) / 2\n}\n\n\n\n\n\n\nThe built-in round function has an argument “digits”, which lets the user specify how many digits to round to.\nFor example:\n\nround(pi, digits = 2)\n\n[1] 3.14\n\nround(pi, digits = 5)\n\n[1] 3.14159\n\n\nIt would be nice if we had a grade rounding function that also lets us specify what is the nearest proportion to which we want to round the grade. For example, if the school decides to use quarter grades (5.25), instead of writing a new function round_to_quarter, it would be nice if we had just one function that can do both things:\n\n# round to nearest half by default:\nround_to_prop(raw_grades)\n\n[1] 3.5 6.0 2.0 6.0 4.5 5.5\n\n\n\n# round to nearest quarter\nround_to_prop(raw_grades, prop = 0.25)\n\n[1] 3.25 5.75 2.25 6.00 4.50 5.25\n\n\nor to any arbitrary proportion:\n\nround_to_prop(raw_grades, prop = 1/3)\n\n[1] 3.333333 6.000000 2.333333 6.000000 4.333333 5.333333\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nround_to_prop &lt;- function(x, prop) {\n  round(x / prop) * prop\n}"
+  },
+  {
+    "objectID": "solutions/E003s_rounding_numbers.html#basic-math-easy",
+    "href": "solutions/E003s_rounding_numbers.html#basic-math-easy",
+    "title": "E003: Numbers & rounding them",
+    "section": "",
+    "text": "as you already know, you can do simple math with R\n\nx &lt;- 4\ny &lt;- 2\nz &lt;- x * y ** 2\nz\n\n[1] 16\n\n\nBut R can do almost everything that can be done with numbers, also with vectors of numbers.\n\nx &lt;- c(4, 3)\nz &lt;- x * y ** 2\nz\n\n[1] 16 12\n\n\nAnd it becomes even easier when you wrap it in functions. So create a function that performs the calculation shown above.\n\ncalc_z(x = 2, y = 4)\n\n[1] 32\n\n\n\n\n\n\n\n\nWarningHint:\n\n\n\nYour function should also work with vectors or with combinations of numbers and vectors\n\ncalc_z(x = c(4, 3), y = 2)\n\n[1] 16 12\n\ncalc_z(x = c(4, 3), y = c(1, 2))\n\n[1]  4 12\n\n\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\ncalc_z &lt;- function(x, y) {\n   x * y ** 2\n}"
+  },
+  {
+    "objectID": "solutions/E003s_rounding_numbers.html#round-numbers-easy",
+    "href": "solutions/E003s_rounding_numbers.html#round-numbers-easy",
+    "title": "E003: Numbers & rounding them",
+    "section": "",
+    "text": "You used already the round function, may with such a line\n\nround(pi, 2)\n\n[1] 3.14\n\n\nR is very flexible and has interpreted this as follows:\n\nround(x = pi, digits = 2)\n\n[1] 3.14\n\n\nBut R also has many other built-in functions, such as rounding up.\n\nceiling(x = pi)\n\n[1] 4\n\n\nGuess the function which is rounding down ;-)\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nfloor(x = pi)\n\n[1] 3"
+  },
+  {
+    "objectID": "solutions/E003s_rounding_numbers.html#evenodd-medium",
+    "href": "solutions/E003s_rounding_numbers.html#evenodd-medium",
+    "title": "E003: Numbers & rounding them",
+    "section": "",
+    "text": "To my knowledge, there is no built-in function that checks whether a number is even or odd.\nBut we can write one ourselves.\n\n\n\n\n\n\nNoteUse may this:\n\n\n\nTry to use the integer operators for the solution.\n\n5 %% 2\n\n[1] 1\n\n5 %/% 2\n\n[1] 2\n\n\n\n\nYou should write a function is_even which returns TRUE or FALSE:\n\n\n\n\n\n\nWarningHint:\n\n\n\nFill out the body of the function below\n\nis_even &lt;- function(x) {\n  # something goes here\n}\n\n\n\n\nis_even(x = 4)\n\n[1] TRUE\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nis_even &lt;- function(x) {\n   x %% 2 == 0\n}"
+  },
+  {
+    "objectID": "solutions/E003s_rounding_numbers.html#round-to-nearest-first-decimal-harder",
+    "href": "solutions/E003s_rounding_numbers.html#round-to-nearest-first-decimal-harder",
+    "title": "E003: Numbers & rounding them",
+    "section": "",
+    "text": "You will often find that you need to round something not to the nearest whole number, but to some other part of a number. For example, grades are often rounded to the nearest half - 4.5, 5, 5.5, 6… Unfortunately we cannot use round directly for this and we’ll have to be a bit more clever.\nWrite a function that will round a number to the nearest half.\n\nround_to_half(pi)\n\n[1] 3\n\nround_to_half(5.21)\n\n[1] 5\n\nround_to_half(5.42)\n\n[1] 5.5\n\nround_to_half(5.57)\n\n[1] 5.5\n\nround_to_half(5.78)\n\n[1] 6\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nround_to_half &lt;- function(x) {\n  round(x * 2) / 2\n}"
+  },
+  {
+    "objectID": "solutions/E003s_rounding_numbers.html#is-your-function-vectorized-harder",
+    "href": "solutions/E003s_rounding_numbers.html#is-your-function-vectorized-harder",
+    "title": "E003: Numbers & rounding them",
+    "section": "",
+    "text": "And just like the built-in functions, it would be nice if this also works with vectors. Check if your function works with vector input. If it doesn’t, why is that? And what can you do to make it work with vectors?\n\nraw_grades &lt;- c(3.35, 5.87, 2.24, 5.9, 4.45, 5.34)\nround_to_half(raw_grades)\n\n[1] 3.5 6.0 2.0 6.0 4.5 5.5\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nround_to_half &lt;- function(x) {\n  round(x * 2) / 2\n}"
+  },
+  {
+    "objectID": "solutions/E003s_rounding_numbers.html#bonus-make-your-rounding-function-more-flexible-hardest",
+    "href": "solutions/E003s_rounding_numbers.html#bonus-make-your-rounding-function-more-flexible-hardest",
+    "title": "E003: Numbers & rounding them",
+    "section": "",
+    "text": "The built-in round function has an argument “digits”, which lets the user specify how many digits to round to.\nFor example:\n\nround(pi, digits = 2)\n\n[1] 3.14\n\nround(pi, digits = 5)\n\n[1] 3.14159\n\n\nIt would be nice if we had a grade rounding function that also lets us specify what is the nearest proportion to which we want to round the grade. For example, if the school decides to use quarter grades (5.25), instead of writing a new function round_to_quarter, it would be nice if we had just one function that can do both things:\n\n# round to nearest half by default:\nround_to_prop(raw_grades)\n\n[1] 3.5 6.0 2.0 6.0 4.5 5.5\n\n\n\n# round to nearest quarter\nround_to_prop(raw_grades, prop = 0.25)\n\n[1] 3.25 5.75 2.25 6.00 4.50 5.25\n\n\nor to any arbitrary proportion:\n\nround_to_prop(raw_grades, prop = 1/3)\n\n[1] 3.333333 6.000000 2.333333 6.000000 4.333333 5.333333\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nround_to_prop &lt;- function(x, prop) {\n  round(x / prop) * prop\n}"
+  },
+  {
     "objectID": "solutions/E001s_calculating_PI.html",
     "href": "solutions/E001s_calculating_PI.html",
     "title": "calculating PI",
@@ -490,6 +539,55 @@
     "text": "Other ways of optimization\nR is a programming language for lazy people. Often, functions have preset default values, which in this example are even helpful. In others, it is very annoying because it makes the code harder to read. So you can love it or hate it, it’s up to you ;-)\nHint: May try ?runif to understand why this gives still the same result.\n\nn &lt;- 1e8\ndata &lt;- data.frame(\n  x = runif(n = n),\n  y = runif(n = n)\n)\ndata$dist &lt;- data$x * data$x + data$y * data$y\ndata$inside &lt;- 2 - ceiling(data$dist)\nselfmade_pi_opt2 &lt;- sum(data$inside) / length(data$inside) * 4\n\n\ncheck_pi_digits(selfmade_pi_opt2)\n\n[1] 3\n\n\nHint: Plot of new Dart-positions\n\n\n\n\n\n\n\n\n\n\nExplanation\nSince the effect of reducing the total area to a quarter is rather small, here is a clearer version. We now throw the darts only into fields where we expect a distinction. For fields in the 10x10 grid where we already know the answer, we do not throw any darts.\n\n\n\n\n\n\n\n\n\n\n\nFeasible solution\n\nn &lt;- round(1e8 / 21, 0)\nquader &lt;- c(\n  1,\n  1,\n  1,\n  1,\n  1,\n  9 / 10,\n  9 / 10,\n  9 / 10,\n  8 / 10,\n  8 / 10,\n  8 / 10,\n  7 / 10,\n  6 / 10,\n  6 / 10,\n  5 / 10,\n  4 / 10,\n  5 / 10,\n  4 / 10,\n  3 / 10,\n  2 / 10,\n  1 / 10\n)\ndata &lt;- data.frame(\n  x = runif(n = n * length(quader), min = quader - 1 / 10, max = quader),\n  y = runif(n = n * length(quader), min = rev(quader) - 1 / 10, max = rev(quader))\n)\ndata$dist &lt;- data$x * data$x + data$y * data$y\ndata$inside &lt;- 2 - ceiling(data$dist)\nselfmade_pi_opt3 &lt;- (sum(data$inside) + n * 65) / (n * 100) * 4\n\n\ncheck_pi_digits(selfmade_pi_opt3)\n\n[1] 4"
   },
   {
+    "objectID": "solutions/E002s_manipulating_strings.html",
+    "href": "solutions/E002s_manipulating_strings.html",
+    "title": "E002: Manipulating strings",
+    "section": "",
+    "text": "Below are some exercises that should help you learn the most important basic built in functions and how to incorporate them into your own functions. This sheet focuses on letters and strings.\n\n\nLet’s start with the obligatory ‘Hello World’.\n\n\n\n\n\n\nNoteUse this\n\n\n\n\ngreet &lt;- function() {\n  print(\"Hello world\")\n}\n\n\n\n\ngreet()\n\n[1] \"Hello world\"\n\n\n\n\n\nSince the first example was very impersonal, now write a function that uses your name.\n\n\n\n\n\n\nWarningHint:\n\n\n\nReplace GAP with something appropriate.\n\ngreet_person &lt;- function(name) {\n  text &lt;- paste(GAP, name, sep = GAP)\n  print(text)\n}\n\n\n\nIt should output something with it.\n\ngreet_person(\"Hubi\")\n\n[1] \"Hello Hubi\"\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\ngreet_person &lt;- function(name) {\n  text &lt;- paste(\"Hello\", name, sep = \" \")\n  print(text)\n}\n\n\n\n\n\n\nTo make it a bit more exciting, the next function should output something different depending on the time of day. So that the function should print ‘Good morning’ until 12, and after that, print ‘Good afternoon’\n\n\n\n\n\n\nWarningHint:\n\n\n\nFill out the body of the function below. You should use the if and else statements we learned in class to complete the assignment.\n\ngreet_time &lt;- function(name, hour = current_hour()) {\n  # put code here\n}\n\n\n\n\n\n\n\n\n\nNoteUse this:\n\n\n\nHere is a helper function to determine the current hour of the day:\n\ncurrent_hour &lt;- function() {\n  # get the current time from the machine \n  current_time &lt;- Sys.time()\n\n  # extract the hour from the full time string \n  hour_string &lt;- format(current_time, \"%H\")\n\n  # convert to a number and return \n  # return() is unnecessary: functions return the value of the last expression\n  as.numeric(hour_string) \n}\n\nYou can use it like this:\n\ncurrent_hour()\n\n[1] 9\n\n\n\n\nBy default the function should use the current time, but to test it you can give it directly the hour as an argument:\n\ngreet_time(\"Hubi\")\n\n[1] \"Good morning Hubi\"\n\ngreet_time(\"Hubi\", hour = 11)\n\n[1] \"Good morning Hubi\"\n\ngreet_time(\"Hubi\", hour = 13)\n\n[1] \"Good afternoon Hubi\"\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\ngreet_time &lt;- function(name, hour = current_hour()) {\n  if (hour &lt; 12) {\n    text &lt;- \"Good morning\"\n  } else {\n    text &lt;- \"Good afternoon\"\n  }\n  text &lt;- paste(text, name, sep = \" \")\n  print(text)\n}\n\n\n\n\n\n\nIf the last exercise wasn’t fancy enough, you can extend it as follows.\n\n\n\n\n\n\nWarningHint:\n\n\n\nFill out the conditions and the body of the function below.\n\nif (CONDITION1) {\n  # something happens here if condition1 is TRUE\n} else if (CONDITION2) {\n  # something else happens here if condition1 is FALSE but condition2 is TRUE\n} else {\n  # a final thing happens if both condition1 and condition2 are FALSE\n}\n\n\n\nResulting in something like that ;-)\n\nvery_fancy_greet(\"Hubi\", hour = 23)\n\n[1] \"Go to bed Hubi\"\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nvery_fancy_greet &lt;- function(name, hour = current_hour()) {\n  if (hour &lt;= 12) {\n    text &lt;- \"Good morning\"\n  } else if (hour &lt;= 18) {\n    text &lt;- \"Good afternoon\"\n  } else if (hour &lt;= 22) {\n    text &lt;- \"Good evening\"\n  } else {\n    text &lt;- \"Go to bed\"\n  }\n  text &lt;- paste(text, name, sep = \" \")\n  print(text)\n}\n\n\n\n\n\n\nGoal: Write a function which reverses a string and makes all letters uppercase.\nYour function should do this\n\nrev_string(\"Hubi\")\n\n[1] \"IBUH\"\n\n\n\n\n\n\n\n\nWarningHere are some tips:\n\n\n\nA very useful function that you might use at some point during data preparation is this:\n\nwords &lt;- strsplit(\"Hello World\", split = \" \")\n\nThe result is here a List of words\n\nwords\n\n[[1]]\n[1] \"Hello\" \"World\"\n\nwords[[1]] # vector\n\n[1] \"Hello\" \"World\"\n\n\nYou can also use this for a own function that reverses a string:\n\ntoupper(\"text\")\n\n[1] \"TEXT\"\n\nrev(c(1, 2, 3))\n\n[1] 3 2 1\n\n\n\n\nCombine the functions above in order to complete assignment.\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nrev_string &lt;- function(text) {\n  text &lt;- toupper(text)\n  vec_text &lt;- strsplit(text, \"\")[[1]]\n  rev_vec &lt;- rev(vec_text)\n  paste(rev_vec, collapse = \"\")\n}\n\n\n\n\n\n\nIf you’ve mastered the last exercise, it’s just a small step to write a function that checks if a word is a palindrome.\nYour function should give out TRUE if the word is a palindrome.\n\n\n\n\n\n\nWarningHint:\n\n\n\nYou can use your function “rev_string()” inside the new function\n\n\n\nis_palindrome(\"Hubi\")\n\n[1] FALSE\n\nis_palindrome(\"Anna\")\n\n[1] TRUE\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nis_palindrome &lt;- function(text) {\n  upper_text &lt;- toupper(text)\n  rev_text &lt;- rev_string(upper_text)\n  upper_text == rev_text\n}"
+  },
+  {
+    "objectID": "solutions/E002s_manipulating_strings.html#hello-world",
+    "href": "solutions/E002s_manipulating_strings.html#hello-world",
+    "title": "E002: Manipulating strings",
+    "section": "",
+    "text": "Let’s start with the obligatory ‘Hello World’.\n\n\n\n\n\n\nNoteUse this\n\n\n\n\ngreet &lt;- function() {\n  print(\"Hello world\")\n}\n\n\n\n\ngreet()\n\n[1] \"Hello world\""
+  },
+  {
+    "objectID": "solutions/E002s_manipulating_strings.html#personal-greetings-easy",
+    "href": "solutions/E002s_manipulating_strings.html#personal-greetings-easy",
+    "title": "E002: Manipulating strings",
+    "section": "",
+    "text": "Since the first example was very impersonal, now write a function that uses your name.\n\n\n\n\n\n\nWarningHint:\n\n\n\nReplace GAP with something appropriate.\n\ngreet_person &lt;- function(name) {\n  text &lt;- paste(GAP, name, sep = GAP)\n  print(text)\n}\n\n\n\nIt should output something with it.\n\ngreet_person(\"Hubi\")\n\n[1] \"Hello Hubi\"\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\ngreet_person &lt;- function(name) {\n  text &lt;- paste(\"Hello\", name, sep = \" \")\n  print(text)\n}"
+  },
+  {
+    "objectID": "solutions/E002s_manipulating_strings.html#fancy-greetings-medium",
+    "href": "solutions/E002s_manipulating_strings.html#fancy-greetings-medium",
+    "title": "E002: Manipulating strings",
+    "section": "",
+    "text": "To make it a bit more exciting, the next function should output something different depending on the time of day. So that the function should print ‘Good morning’ until 12, and after that, print ‘Good afternoon’\n\n\n\n\n\n\nWarningHint:\n\n\n\nFill out the body of the function below. You should use the if and else statements we learned in class to complete the assignment.\n\ngreet_time &lt;- function(name, hour = current_hour()) {\n  # put code here\n}\n\n\n\n\n\n\n\n\n\nNoteUse this:\n\n\n\nHere is a helper function to determine the current hour of the day:\n\ncurrent_hour &lt;- function() {\n  # get the current time from the machine \n  current_time &lt;- Sys.time()\n\n  # extract the hour from the full time string \n  hour_string &lt;- format(current_time, \"%H\")\n\n  # convert to a number and return \n  # return() is unnecessary: functions return the value of the last expression\n  as.numeric(hour_string) \n}\n\nYou can use it like this:\n\ncurrent_hour()\n\n[1] 9\n\n\n\n\nBy default the function should use the current time, but to test it you can give it directly the hour as an argument:\n\ngreet_time(\"Hubi\")\n\n[1] \"Good morning Hubi\"\n\ngreet_time(\"Hubi\", hour = 11)\n\n[1] \"Good morning Hubi\"\n\ngreet_time(\"Hubi\", hour = 13)\n\n[1] \"Good afternoon Hubi\"\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\ngreet_time &lt;- function(name, hour = current_hour()) {\n  if (hour &lt; 12) {\n    text &lt;- \"Good morning\"\n  } else {\n    text &lt;- \"Good afternoon\"\n  }\n  text &lt;- paste(text, name, sep = \" \")\n  print(text)\n}"
+  },
+  {
+    "objectID": "solutions/E002s_manipulating_strings.html#very-fancy-greetings-harder",
+    "href": "solutions/E002s_manipulating_strings.html#very-fancy-greetings-harder",
+    "title": "E002: Manipulating strings",
+    "section": "",
+    "text": "If the last exercise wasn’t fancy enough, you can extend it as follows.\n\n\n\n\n\n\nWarningHint:\n\n\n\nFill out the conditions and the body of the function below.\n\nif (CONDITION1) {\n  # something happens here if condition1 is TRUE\n} else if (CONDITION2) {\n  # something else happens here if condition1 is FALSE but condition2 is TRUE\n} else {\n  # a final thing happens if both condition1 and condition2 are FALSE\n}\n\n\n\nResulting in something like that ;-)\n\nvery_fancy_greet(\"Hubi\", hour = 23)\n\n[1] \"Go to bed Hubi\"\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nvery_fancy_greet &lt;- function(name, hour = current_hour()) {\n  if (hour &lt;= 12) {\n    text &lt;- \"Good morning\"\n  } else if (hour &lt;= 18) {\n    text &lt;- \"Good afternoon\"\n  } else if (hour &lt;= 22) {\n    text &lt;- \"Good evening\"\n  } else {\n    text &lt;- \"Go to bed\"\n  }\n  text &lt;- paste(text, name, sep = \" \")\n  print(text)\n}"
+  },
+  {
+    "objectID": "solutions/E002s_manipulating_strings.html#reverse-strings-harder",
+    "href": "solutions/E002s_manipulating_strings.html#reverse-strings-harder",
+    "title": "E002: Manipulating strings",
+    "section": "",
+    "text": "Goal: Write a function which reverses a string and makes all letters uppercase.\nYour function should do this\n\nrev_string(\"Hubi\")\n\n[1] \"IBUH\"\n\n\n\n\n\n\n\n\nWarningHere are some tips:\n\n\n\nA very useful function that you might use at some point during data preparation is this:\n\nwords &lt;- strsplit(\"Hello World\", split = \" \")\n\nThe result is here a List of words\n\nwords\n\n[[1]]\n[1] \"Hello\" \"World\"\n\nwords[[1]] # vector\n\n[1] \"Hello\" \"World\"\n\n\nYou can also use this for a own function that reverses a string:\n\ntoupper(\"text\")\n\n[1] \"TEXT\"\n\nrev(c(1, 2, 3))\n\n[1] 3 2 1\n\n\n\n\nCombine the functions above in order to complete assignment.\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nrev_string &lt;- function(text) {\n  text &lt;- toupper(text)\n  vec_text &lt;- strsplit(text, \"\")[[1]]\n  rev_vec &lt;- rev(vec_text)\n  paste(rev_vec, collapse = \"\")\n}"
+  },
+  {
+    "objectID": "solutions/E002s_manipulating_strings.html#palindrome-combined",
+    "href": "solutions/E002s_manipulating_strings.html#palindrome-combined",
+    "title": "E002: Manipulating strings",
+    "section": "",
+    "text": "If you’ve mastered the last exercise, it’s just a small step to write a function that checks if a word is a palindrome.\nYour function should give out TRUE if the word is a palindrome.\n\n\n\n\n\n\nWarningHint:\n\n\n\nYou can use your function “rev_string()” inside the new function\n\n\n\nis_palindrome(\"Hubi\")\n\n[1] FALSE\n\nis_palindrome(\"Anna\")\n\n[1] TRUE\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nis_palindrome &lt;- function(text) {\n  upper_text &lt;- toupper(text)\n  rev_text &lt;- rev_string(upper_text)\n  upper_text == rev_text\n}"
+  },
+  {
     "objectID": "resources/textbooks.html",
     "href": "resources/textbooks.html",
     "title": "Annotated list of learning resources",
@@ -509,6 +607,69 @@
     "title": "Course slides",
     "section": "",
     "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExtending Claude Code: Skills & MCP Servers\n\n\nVen Popov\n\n\n\n\n\n\nFS26 “What I wish someone taught me 10 years ago”\n\n\nVen Popov\n\n\n\n\n\n\nThe Structure of a Program\n\n\nVen Popov\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "solutions/E004s_sequences.html",
+    "href": "solutions/E004s_sequences.html",
+    "title": "E004: Vectors & Sequences",
+    "section": "",
+    "text": "Below are some exercises that should help you learn the most important basic built in functions and how to incorporate them into your own functions. This sheet focuses on vectors and how the easily generated.\n\n\nThe most challenging aspect of R is probably its flexibility. All these lines do exactly the same thing!\n\nvec_z &lt;- 1:6\nvec_z &lt;- seq(1, 6)\nvec_z &lt;- seq(1, 6, 1)\nvec_z &lt;- seq(from = 1, to = 6, by = 1)\nvec_z &lt;- seq_len(6)\nvec_z\n\n[1] 1 2 3 4 5 6\n\n\nTry to generate this sequence\n\n\n[1] 1 3 5\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nseq(from = 1, to = 6, by = 2)\n\n[1] 1 3 5\n\n\n\n\n\n\n\nA second way to generate vectors is by using this:\n\nrep(x = 5, times = 4)\n\n[1] 5 5 5 5\n\n\nTry to generate this sequence\n\n\n[1] 1 3 1 3 1 3 1 3\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nrep(x = c(1, 3), times = 4)\n\n[1] 1 3 1 3 1 3 1 3\n\n\n\n\nAnd try now to generate this sequence with the same function\nHint: you will need a other parameter then times (?rep)\n\n\n[1] 1 1 1 1 3 3 3 3\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nrep(x = c(1, 3), each = 4)\n\n[1] 1 1 1 1 3 3 3 3\n\n\n\n\n\n\n\nAs you can see, the built-in functions are very flexible and can define many different vectors. Now for something trickier.\nCreate a function that takes a single integer n and generates a sequence with all natural numbers from 1 to n, such that each number x is repeated x number of times. Here are some examples of desired output:\n\nincremental_seq(1)\n\n[1] 1\n\nincremental_seq(2)\n\n[1] 1 2 2\n\nincremental_seq(3)\n\n[1] 1 2 2 3 3 3\n\nincremental_seq(4)\n\n [1] 1 2 2 3 3 3 4 4 4 4\n\nincremental_seq(5)\n\n [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5\n\n\n\n\n\n\n\n\nWarningHint:\n\n\n\nRead carefully the documentation for the rep function by typing ?rep or help(rep) in the R console. Specifically look at the explanation of the times argument in the Details section. What happens when times is not a single number but a vector instead?\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nincremental_seq &lt;- function(n) {\n  x &lt;- seq_len(n)\n  rep(x, x)\n}\n\n\n\n\n\n\nIn this task you have to do almost the reverse of the previous. Given a vector of items, determine how often each item is repeated in an uninterupted sequence and print a summary. Example output:\n\nsummarise_reps(c(\"A\", \"A\", \"A\", \"B\", \"C\", \"C\", \"M\", \"M\", \"M\", \"M\", \"A\", \"A\"))\n\nValue: A, Reps: 3\nValue: B, Reps: 1\nValue: C, Reps: 2\nValue: M, Reps: 4\nValue: A, Reps: 2\n\n\n\n\n\n\n\n\nWarningHint:\n\n\n\nYou can do this with low-level functions. You could also search for a concept called “Run Length Encoding”. Is there a base R function that computes the run length encoding? What type of object does it return? How can you extract the information you need from that object?\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nsummarise_reps &lt;- function(x) {\n  rle_list &lt;- rle(x)\n  values &lt;- rle_list$values\n  reps &lt;- rle_list$lengths\n  smry &lt;- paste0(\"Value: \", values, \", Reps: \", reps, collapse = \"\\n\")\n  cat(smry)\n}"
+  },
+  {
+    "objectID": "solutions/E004s_sequences.html#by-sequences-easy",
+    "href": "solutions/E004s_sequences.html#by-sequences-easy",
+    "title": "E004: Vectors & Sequences",
+    "section": "",
+    "text": "The most challenging aspect of R is probably its flexibility. All these lines do exactly the same thing!\n\nvec_z &lt;- 1:6\nvec_z &lt;- seq(1, 6)\nvec_z &lt;- seq(1, 6, 1)\nvec_z &lt;- seq(from = 1, to = 6, by = 1)\nvec_z &lt;- seq_len(6)\nvec_z\n\n[1] 1 2 3 4 5 6\n\n\nTry to generate this sequence\n\n\n[1] 1 3 5\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nseq(from = 1, to = 6, by = 2)\n\n[1] 1 3 5"
+  },
+  {
+    "objectID": "solutions/E004s_sequences.html#by-repetitions-medium",
+    "href": "solutions/E004s_sequences.html#by-repetitions-medium",
+    "title": "E004: Vectors & Sequences",
+    "section": "",
+    "text": "A second way to generate vectors is by using this:\n\nrep(x = 5, times = 4)\n\n[1] 5 5 5 5\n\n\nTry to generate this sequence\n\n\n[1] 1 3 1 3 1 3 1 3\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nrep(x = c(1, 3), times = 4)\n\n[1] 1 3 1 3 1 3 1 3\n\n\n\n\nAnd try now to generate this sequence with the same function\nHint: you will need a other parameter then times (?rep)\n\n\n[1] 1 1 1 1 3 3 3 3\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nrep(x = c(1, 3), each = 4)\n\n[1] 1 1 1 1 3 3 3 3"
+  },
+  {
+    "objectID": "solutions/E004s_sequences.html#repetitions-each-medium",
+    "href": "solutions/E004s_sequences.html#repetitions-each-medium",
+    "title": "E004: Vectors & Sequences",
+    "section": "",
+    "text": "As you can see, the built-in functions are very flexible and can define many different vectors. Now for something trickier.\nCreate a function that takes a single integer n and generates a sequence with all natural numbers from 1 to n, such that each number x is repeated x number of times. Here are some examples of desired output:\n\nincremental_seq(1)\n\n[1] 1\n\nincremental_seq(2)\n\n[1] 1 2 2\n\nincremental_seq(3)\n\n[1] 1 2 2 3 3 3\n\nincremental_seq(4)\n\n [1] 1 2 2 3 3 3 4 4 4 4\n\nincremental_seq(5)\n\n [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5\n\n\n\n\n\n\n\n\nWarningHint:\n\n\n\nRead carefully the documentation for the rep function by typing ?rep or help(rep) in the R console. Specifically look at the explanation of the times argument in the Details section. What happens when times is not a single number but a vector instead?\n\n\n\n\n\n\n\n\nTipSolution:\n\n\n\n\nincremental_seq &lt;- function(n) {\n  x &lt;- seq_len(n)\n  rep(x, x)\n}"
+  },
+  {
+    "objectID": "solutions/E004s_sequences.html#count-repetitions-harder",
+    "href": "solutions/E004s_sequences.html#count-repetitions-harder",
+    "title": "E004: Vectors & Sequences",
+    "section": "",
+    "text": "In this task you have to do almost the reverse of the previous. Given a vector of items, determine how often each item is repeated in an uninterupted sequence and print a summary. Example output:\n\nsummarise_reps(c(\"A\", \"A\", \"A\", \"B\", \"C\", \"C\", \"M\", \"M\", \"M\", \"M\", \"A\", \"A\"))\n\nValue: A, Reps: 3\nValue: B, Reps: 1\nValue: C, Reps: 2\nValue: M, Reps: 4\nValue: A, Reps: 2\n\n\n\n\n\n\n\n\nWarningHint:\n\n\n\nYou can do this with low-level functions. You could also search for a concept called “Run Length Encoding”. Is there a base R function that computes the run length encoding? What type of object does it return? How can you extract the information you need from that object?\n\n\n\n\n\n\n\n\nTipFeasible solution:\n\n\n\n\nsummarise_reps &lt;- function(x) {\n  rle_list &lt;- rle(x)\n  values &lt;- rle_list$values\n  reps &lt;- rle_list$lengths\n  smry &lt;- paste0(\"Value: \", values, \", Reps: \", reps, collapse = \"\\n\")\n  cat(smry)\n}"
+  },
+  {
+    "objectID": "solutions/E005s_curves_plots.html",
+    "href": "solutions/E005s_curves_plots.html",
+    "title": "E005: Curves & Plots",
+    "section": "",
+    "text": "This sheet contains an exercise where you can apply and deepen the skills from E002 to E004\n\n\nTo begin, we need a function that calculates the sine.\nHint: implement at least this parameters, if you like you can also add offsets.\n\nx &lt;- pi\namp &lt;- 2\nfreq &lt;- 0.5\n\ny &lt;- amp * sin(freq * x)\ny\n\n[1] 2\n\n\nYour function now should do this\n\ncalc_sin(x = pi, amp = 2, freq = 0.5)\n\n[1] 2\n\n\nand it should also work with a vector\nHint: sequences you learned in E004\n\nx &lt;- seq(from = 0, to = 4*pi, by = pi/4)\ny &lt;- calc_sin(x = x, amp = 2, freq = 0.5)\ny\n\n [1]  0.000000e+00  7.653669e-01  1.414214e+00  1.847759e+00  2.000000e+00\n [6]  1.847759e+00  1.414214e+00  7.653669e-01  2.449294e-16 -7.653669e-01\n[11] -1.414214e+00 -1.847759e+00 -2.000000e+00 -1.847759e+00 -1.414214e+00\n[16] -7.653669e-01 -4.898587e-16\n\n\n\n\n\n\nSince the previous result is not easy to verify, let’s create a plot of these results.\n\nplot(x, y, type = \"l\", col = \"blue\", lwd = 2, \n     xlab = \"x\", ylab = \"y\", main = \"Sine curve\")\n\n\n\n\n\n\n\n\nYou are already familiar with functions that return text or numbers. In R, however, it is also possible to write functions that generates directly plots.\n\nplot_sin &lt;- function(x, GAP){\n  y &lt;- GAP # calc_sin\n  title &lt;- GAP\n  return(plot(x, y, GAP))\n}\n\n\nYou should got a function which does something like that\nHint: Use “E002”-skills for customizing your title\n\nx &lt;- seq(from = 0, to = 4*pi, by = pi/25)\nplot_sin(x = x, amp = 2, freq = 1, color = \"green\")\n\n\n\n\n\n\n\n\n\n\n\n\nOnce the basic building blocks are in place, it becomes easier to add further enhancements. Here, for example, is a reference curve added.\n\nplot_sin_rev(x = x, amp = 2, freq = 2, color = \"green\")\n\n\n\n\n\n\n\n\n\n\nplot_sin_rev(x = x, amp = 2, freq = 1, yoffset =1, color = \"green\")"
+  },
+  {
+    "objectID": "solutions/E005s_curves_plots.html#calculating-a-sine-curve-e003",
+    "href": "solutions/E005s_curves_plots.html#calculating-a-sine-curve-e003",
+    "title": "E005: Curves & Plots",
+    "section": "",
+    "text": "To begin, we need a function that calculates the sine.\nHint: implement at least this parameters, if you like you can also add offsets.\n\nx &lt;- pi\namp &lt;- 2\nfreq &lt;- 0.5\n\ny &lt;- amp * sin(freq * x)\ny\n\n[1] 2\n\n\nYour function now should do this\n\ncalc_sin(x = pi, amp = 2, freq = 0.5)\n\n[1] 2\n\n\nand it should also work with a vector\nHint: sequences you learned in E004\n\nx &lt;- seq(from = 0, to = 4*pi, by = pi/4)\ny &lt;- calc_sin(x = x, amp = 2, freq = 0.5)\ny\n\n [1]  0.000000e+00  7.653669e-01  1.414214e+00  1.847759e+00  2.000000e+00\n [6]  1.847759e+00  1.414214e+00  7.653669e-01  2.449294e-16 -7.653669e-01\n[11] -1.414214e+00 -1.847759e+00 -2.000000e+00 -1.847759e+00 -1.414214e+00\n[16] -7.653669e-01 -4.898587e-16"
+  },
+  {
+    "objectID": "solutions/E005s_curves_plots.html#ploting-a-curve-combined",
+    "href": "solutions/E005s_curves_plots.html#ploting-a-curve-combined",
+    "title": "E005: Curves & Plots",
+    "section": "",
+    "text": "Since the previous result is not easy to verify, let’s create a plot of these results.\n\nplot(x, y, type = \"l\", col = \"blue\", lwd = 2, \n     xlab = \"x\", ylab = \"y\", main = \"Sine curve\")\n\n\n\n\n\n\n\n\nYou are already familiar with functions that return text or numbers. In R, however, it is also possible to write functions that generates directly plots.\n\nplot_sin &lt;- function(x, GAP){\n  y &lt;- GAP # calc_sin\n  title &lt;- GAP\n  return(plot(x, y, GAP))\n}\n\n\nYou should got a function which does something like that\nHint: Use “E002”-skills for customizing your title\n\nx &lt;- seq(from = 0, to = 4*pi, by = pi/25)\nplot_sin(x = x, amp = 2, freq = 1, color = \"green\")"
+  },
+  {
+    "objectID": "solutions/E005s_curves_plots.html#add-a-reverence-curve-outlook",
+    "href": "solutions/E005s_curves_plots.html#add-a-reverence-curve-outlook",
+    "title": "E005: Curves & Plots",
+    "section": "",
+    "text": "Once the basic building blocks are in place, it becomes easier to add further enhancements. Here, for example, is a reference curve added.\n\nplot_sin_rev(x = x, amp = 2, freq = 2, color = \"green\")\n\n\n\n\n\n\n\n\n\n\nplot_sin_rev(x = x, amp = 2, freq = 1, yoffset =1, color = \"green\")"
   },
   {
     "objectID": "index.html",
