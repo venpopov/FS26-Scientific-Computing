@@ -1,7 +1,9 @@
 [
   {
     "listing": "/solutions.html",
-    "items": []
+    "items": [
+      "/solutions/E001s_calculating_PI.html"
+    ]
   },
   {
     "listing": "/slides.html",
