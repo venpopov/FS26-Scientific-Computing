@@ -1,8 +1,8 @@
 ---
-title: FS25 Introduction to programming and scientific computing
+title: FS26 Introduction to programming and scientific computing
 ---
 
-Course materials for University of Zurich FS25 Introduction to Programming and Scientific Computing masters course
+Course materials for University of Zurich FS26 Introduction to Programming and Scientific Computing masters course
 
 ## Course description
 

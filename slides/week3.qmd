@@ -5,7 +5,7 @@ format:
   revealjs:
     theme: dark
     css: style.css
-    footer: "FS25 Scientific Computing &nbsp; | &nbsp; Week 3"
+    footer: "FS26 Scientific Computing &nbsp; | &nbsp; Week 3"
     slide-number: true
     fig-responsive: true
 resources:

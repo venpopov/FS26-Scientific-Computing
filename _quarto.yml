@@ -4,7 +4,7 @@ project:
   resources: resources/cheatsheets/*
 
 website:
-  title: "FS25: Scientific Computing"
+  title: "FS26: Scientific Computing"
   search: true
   page-navigation: true
   navbar:

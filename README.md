@@ -1,5 +1,5 @@
-# FS25-Scientific-Computing
-Course materials for University of Zurich FS25 Introduction to Programming and Scientific Computing masters course
+# FS26-Scientific-Computing
+Course materials for University of Zurich FS26 Introduction to Programming and Scientific Computing masters course
 
 ## Tech stack
 
