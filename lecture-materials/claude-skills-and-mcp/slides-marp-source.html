@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>slides-marp-source – FS26: Scientific Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9e15f8fb9e1f2f288bfbe28f6ca11029.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-03ecaf68f9a2923f31dd428ff1c463f1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">FS26: Scientific Computing</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../slides.html"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../exercises.html"> 
+<span class="menu-text">Exercises</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../solutions.html"> 
+<span class="menu-text">Solutions</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-additional-resources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Additional resources</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-additional-resources">    
+        <li>
+    <a class="dropdown-item" href="../../resources/cheatsheets/">
+ <span class="dropdown-text">R &amp; Math cheatsheets</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources/textbooks.html">
+ <span class="dropdown-text">Textbooks and learning resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources/glossary.html">
+ <span class="dropdown-text">Glossary</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#extending-claude-code" id="toc-extending-claude-code" class="nav-link active" data-scroll-target="#extending-claude-code">Extending Claude Code</a>
+  <ul class="collapse">
+  <li><a href="#skills-mcp-servers" id="toc-skills-mcp-servers" class="nav-link" data-scroll-target="#skills-mcp-servers">Skills &amp; MCP Servers</a></li>
+  <li><a href="#where-we-left-off" id="toc-where-we-left-off" class="nav-link" data-scroll-target="#where-we-left-off">Where we left off</a></li>
+  <li><a href="#two-new-vocab-words" id="toc-two-new-vocab-words" class="nav-link" data-scroll-target="#two-new-vocab-words">Two new vocab words</a></li>
+  <li><a href="#why-bother" id="toc-why-bother" class="nav-link" data-scroll-target="#why-bother">Why bother?</a></li>
+  </ul></li>
+  <li><a href="#part-1-skills" id="toc-part-1-skills" class="nav-link" data-scroll-target="#part-1-skills">Part 1 — Skills</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-skill-concretely" id="toc-what-is-a-skill-concretely" class="nav-link" data-scroll-target="#what-is-a-skill-concretely">What is a skill, concretely?</a></li>
+  <li><a href="#the-minimum-skill.md" id="toc-the-minimum-skill.md" class="nav-link" data-scroll-target="#the-minimum-skill.md">The minimum <code>SKILL.md</code></a></li>
+  <li><a href="#where-skills-come-from-load-order" id="toc-where-skills-come-from-load-order" class="nav-link" data-scroll-target="#where-skills-come-from-load-order">Where skills come from (load order)</a></li>
+  <li><a href="#how-does-claude-decide-to-use-a-skill" id="toc-how-does-claude-decide-to-use-a-skill" class="nav-link" data-scroll-target="#how-does-claude-decide-to-use-a-skill">How does Claude <em>decide</em> to use a skill?</a></li>
+  <li><a href="#two-ways-to-fire-a-skill" id="toc-two-ways-to-fire-a-skill" class="nav-link" data-scroll-target="#two-ways-to-fire-a-skill">Two ways to fire a skill</a></li>
+  <li><a href="#anatomy-of-a-good-description" id="toc-anatomy-of-a-good-description" class="nav-link" data-scroll-target="#anatomy-of-a-good-description">Anatomy of a good description</a></li>
+  <li><a href="#exercise-a-install-drive-test-a-public-skill-20-min" id="toc-exercise-a-install-drive-test-a-public-skill-20-min" class="nav-link" data-scroll-target="#exercise-a-install-drive-test-a-public-skill-20-min">Exercise A — Install &amp; drive-test a public skill (20 min)</a></li>
+  <li><a href="#building-your-own-meet-skill-creator" id="toc-building-your-own-meet-skill-creator" class="nav-link" data-scroll-target="#building-your-own-meet-skill-creator">Building your own — meet <code>skill-creator</code></a></li>
+  <li><a href="#mini-exercise-make-one-yourself-10-min" id="toc-mini-exercise-make-one-yourself-10-min" class="nav-link" data-scroll-target="#mini-exercise-make-one-yourself-10-min">Mini-exercise — make one yourself (10 min)</a></li>
+  <li><a href="#skills-recap" id="toc-skills-recap" class="nav-link" data-scroll-target="#skills-recap">Skills — recap</a></li>
+  </ul></li>
+  <li><a href="#part-2-mcp-servers" id="toc-part-2-mcp-servers" class="nav-link" data-scroll-target="#part-2-mcp-servers">Part 2 — MCP servers</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-skills-cant-solve" id="toc-the-problem-skills-cant-solve" class="nav-link" data-scroll-target="#the-problem-skills-cant-solve">The problem skills can’t solve</a></li>
+  <li><a href="#what-is-mcp" id="toc-what-is-mcp" class="nav-link" data-scroll-target="#what-is-mcp">What is MCP?</a></li>
+  <li><a href="#what-an-mcp-server-exposes" id="toc-what-an-mcp-server-exposes" class="nav-link" data-scroll-target="#what-an-mcp-server-exposes">What an MCP server exposes</a></li>
+  <li><a href="#mental-model" id="toc-mental-model" class="nav-link" data-scroll-target="#mental-model">Mental model</a></li>
+  <li><a href="#skill-vs-mcp-pick-one" id="toc-skill-vs-mcp-pick-one" class="nav-link" data-scroll-target="#skill-vs-mcp-pick-one">Skill vs MCP — pick one</a></li>
+  <li><a href="#adding-an-mcp-server" id="toc-adding-an-mcp-server" class="nav-link" data-scroll-target="#adding-an-mcp-server">Adding an MCP server</a></li>
+  <li><a href="#safe-mcp-servers-to-try-in-class" id="toc-safe-mcp-servers-to-try-in-class" class="nav-link" data-scroll-target="#safe-mcp-servers-to-try-in-class">Safe MCP servers to try in class</a></li>
+  <li><a href="#exercise-b-wire-up-an-mcp-10-min" id="toc-exercise-b-wire-up-an-mcp-10-min" class="nav-link" data-scroll-target="#exercise-b-wire-up-an-mcp-10-min">Exercise B — Wire up an MCP (10 min)</a></li>
+  <li><a href="#when-mcp-gets-dangerous" id="toc-when-mcp-gets-dangerous" class="nav-link" data-scroll-target="#when-mcp-gets-dangerous">When MCP gets dangerous</a></li>
+  <li><a href="#where-mcp-configs-live" id="toc-where-mcp-configs-live" class="nav-link" data-scroll-target="#where-mcp-configs-live">Where MCP configs live</a></li>
+  <li><a href="#building-your-own-mcp-server" id="toc-building-your-own-mcp-server" class="nav-link" data-scroll-target="#building-your-own-mcp-server">Building your own MCP server</a></li>
+  <li><a href="#recap-skills-vs-mcp" id="toc-recap-skills-vs-mcp" class="nav-link" data-scroll-target="#recap-skills-vs-mcp">Recap — Skills vs MCP</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="extending-claude-code" class="level1">
+<h1>Extending Claude Code</h1>
+<section id="skills-mcp-servers" class="level2">
+<h2 class="anchored" data-anchor-id="skills-mcp-servers">Skills &amp; MCP Servers</h2>
+<p>Week 2 · Programming with Claude</p>
+<!--
+SPEAKER: last week we treated Claude Code as a clever chat box that can read & edit files.
+Today we make it grow: teach it new procedures (skills) and connect it to the outside
+world (MCP).
+-->
+<hr>
+</section>
+<section id="where-we-left-off" class="level2">
+<h2 class="anchored" data-anchor-id="where-we-left-off">Where we left off</h2>
+<p>Last week you could:</p>
+<ul>
+<li>Open Claude Code in a project</li>
+<li>Ask it to read, edit, and run code</li>
+<li>Use the built-in tools: <code>Read</code>, <code>Edit</code>, <code>Bash</code>, <code>Grep</code>, etc.</li>
+</ul>
+<p>Today: <strong>two ways to extend Claude itself</strong>.</p>
+<hr>
+</section>
+<section id="two-new-vocab-words" class="level2">
+<h2 class="anchored" data-anchor-id="two-new-vocab-words">Two new vocab words</h2>
+<div class="two">
+<section id="skill" class="level3">
+<h3 class="anchored" data-anchor-id="skill">Skill</h3>
+<p>A bundle of <strong>instructions</strong> Claude can choose to load on demand.</p>
+<p><em>“Here’s how I want you to handle X.”</em></p>
+<p>Lives as a markdown file on disk.</p>
+</section>
+<section id="mcp-server" class="level3">
+<h3 class="anchored" data-anchor-id="mcp-server">MCP server</h3>
+<p>A <strong>process</strong> that exposes new <strong>tools</strong> and <strong>data</strong> over a standard protocol.</p>
+<p><em>“Here are new abilities you didn’t have before.”</em></p>
+<p>Lives as a running program.</p>
+</section>
+</div>
+<blockquote class="blockquote">
+<p>Mantra: <strong>skills are knowledge, MCPs are capabilities.</strong></p>
+</blockquote>
+<hr>
+</section>
+<section id="why-bother" class="level2">
+<h2 class="anchored" data-anchor-id="why-bother">Why bother?</h2>
+<ul>
+<li>The base model is generic. <em>You</em> are not.</li>
+<li>Repeated procedures → put in a skill, stop re-typing them.</li>
+<li>External systems (DBs, APIs, your editor) → MCP, stop pasting screenshots.</li>
+<li>Lower context cost: skills load <strong>only when needed</strong>.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="part-1-skills" class="level1">
+<h1>Part 1 — Skills</h1>
+<hr>
+<section id="what-is-a-skill-concretely" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-skill-concretely">What is a skill, concretely?</h2>
+<p>A folder. Inside: a <code>SKILL.md</code>. That’s it.</p>
+<pre><code>~/.claude/skills/
+└── citation-helper/
+    ├── SKILL.md          ← required
+    └── (optional: templates, scripts, examples)</code></pre>
+<p><code>SKILL.md</code> has YAML frontmatter + a markdown body.</p>
+<hr>
+</section>
+<section id="the-minimum-skill.md" class="level2">
+<h2 class="anchored" data-anchor-id="the-minimum-skill.md">The minimum <code>SKILL.md</code></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">name:</span><span class="co"> citation-helper</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Convert a DOI or arXiv ID into a properly formatted</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">  APA citation. Use whenever the user mentions DOI, arXiv,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">  citation, references, or bibliography.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu"># How to use this skill</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Extract the identifier from the user's message.</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Fetch metadata from the public Crossref API.</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Format as APA 7 and return *only* the citation string.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two things matter for triggering: the <strong>name</strong> and the <strong>description</strong>.</p>
+<hr>
+</section>
+<section id="where-skills-come-from-load-order" class="level2">
+<h2 class="anchored" data-anchor-id="where-skills-come-from-load-order">Where skills come from (load order)</h2>
+<p>Claude Code looks in several places. Roughly:</p>
+<ol type="1">
+<li><strong>Built-in</strong> skills shipped with Claude Code (e.g.&nbsp;<code>init</code>, <code>review</code>, <code>security-review</code>)</li>
+<li><strong>User-level</strong>: <code>~/.claude/skills/&lt;name&gt;/SKILL.md</code> — <em>yours, for every project</em></li>
+<li><strong>Project-level</strong>: <code>.claude/skills/&lt;name&gt;/SKILL.md</code> — <em>checked into the repo, team-shared</em></li>
+<li><strong>Plugins</strong>: installed plugin packages can ship skills</li>
+</ol>
+<p>If two skills share a name, the more specific scope wins (project &gt; user &gt; built-in).</p>
+<hr>
+</section>
+<section id="how-does-claude-decide-to-use-a-skill" class="level2">
+<h2 class="anchored" data-anchor-id="how-does-claude-decide-to-use-a-skill">How does Claude <em>decide</em> to use a skill?</h2>
+<p>At session start, Claude sees a list like:</p>
+<pre><code>Available skills:
+- pdf: Extract text, tables, and images from PDF files...
+- citation-helper: Convert DOI or arXiv ID into APA citation...
+- skill-creator: Create new skills, modify and improve existing skills...</code></pre>
+<p><strong>Just the name + description.</strong> Not the body.</p>
+<p>When your prompt arrives, Claude matches your task against those descriptions and calls the <code>Skill</code> tool if one fits. The body loads <em>then</em>.</p>
+<p>This is <strong>progressive disclosure</strong> — your context window stays cheap.</p>
+<hr>
+</section>
+<section id="two-ways-to-fire-a-skill" class="level2">
+<h2 class="anchored" data-anchor-id="two-ways-to-fire-a-skill">Two ways to fire a skill</h2>
+<div class="two">
+<section id="auto-trigger" class="level3">
+<h3 class="anchored" data-anchor-id="auto-trigger">Auto-trigger</h3>
+<p>You ask: &gt; <em>Summarize page 3 of report.pdf</em></p>
+<p>Claude sees <code>pdf</code> matches → loads it → uses it.</p>
+</section>
+<section id="explicit" class="level3">
+<h3 class="anchored" data-anchor-id="explicit">Explicit</h3>
+<p>You type: &gt; <code>/pdf extract tables from report.pdf</code></p>
+<p>Always loads the named skill.</p>
+</section>
+</div>
+<p>The slash form is your safety net when auto-trigger doesn’t pick the right one.</p>
+<hr>
+</section>
+<section id="anatomy-of-a-good-description" class="level2">
+<h2 class="anchored" data-anchor-id="anatomy-of-a-good-description">Anatomy of a good description</h2>
+<p>Bad:</p>
+<blockquote class="blockquote">
+<p><em>Helps with documents.</em></p>
+</blockquote>
+<p>Good:</p>
+<blockquote class="blockquote">
+<p><em>Convert a DOI or arXiv ID into APA 7 citation. Use when the user mentions DOI, arXiv, bibliography, references, or asks to format a citation.</em></p>
+</blockquote>
+<p>Rule of thumb: <strong>list the trigger words a user would actually say.</strong> Claude is doing fuzzy keyword matching against your description.</p>
+<hr>
+<!-- _class: exercise -->
+</section>
+<section id="exercise-a-install-drive-test-a-public-skill-20-min" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-a-install-drive-test-a-public-skill-20-min">Exercise A — Install &amp; drive-test a public skill (20 min)</h2>
+<ol type="1">
+<li>Visit <strong><code>github.com/anthropics/skills</code></strong></li>
+<li>Pick <strong>one</strong> of: <code>pdf</code>, <code>docx</code>, <code>xlsx</code>, <code>pptx</code></li>
+<li>Copy the folder into <code>~/.claude/skills/</code></li>
+<li>Restart Claude Code</li>
+<li>Try <strong>auto-trigger</strong>: ask a natural question about the sample file in the class repo</li>
+<li>Try <strong>explicit</strong>: invoke with <code>/skill-name ...</code></li>
+<li>Open <code>SKILL.md</code>. Predict: would Claude trigger this for <em>“clean up my résumé”</em>? Why / why not?</li>
+</ol>
+<div class="gap">
+<p>GAP — Pair up and exchange one finding: what surprised you? Anyone get the wrong skill to fire?</p>
+</div>
+<hr>
+</section>
+<section id="building-your-own-meet-skill-creator" class="level2">
+<h2 class="anchored" data-anchor-id="building-your-own-meet-skill-creator">Building your own — meet <code>skill-creator</code></h2>
+<p>Anthropic ships a meta-skill for this. Run:</p>
+<pre><code>/skill-creator</code></pre>
+<p>Tell it what you want. It will:</p>
+<ul>
+<li>pick a name</li>
+<li>draft the description (the load-bearing part!)</li>
+<li>scaffold the body</li>
+<li>write the file to <code>~/.claude/skills/...</code></li>
+</ul>
+<p>Then you can edit it like any other file.</p>
+<hr>
+<!-- _class: exercise -->
+</section>
+<section id="mini-exercise-make-one-yourself-10-min" class="level2">
+<h2 class="anchored" data-anchor-id="mini-exercise-make-one-yourself-10-min">Mini-exercise — make one yourself (10 min)</h2>
+<p>Build a skill that automates something <strong>you already do by hand</strong>.</p>
+<p>Examples to seed ideas: - <em>“Reformat my commit messages to conventional-commits style”</em> - <em>“Turn my lecture notes into Anki flashcards”</em> - <em>“Generate a uv-style <code>pyproject.toml</code> from a list of imports”</em></p>
+<div class="gap">
+<p>GAP — Show your <code>SKILL.md</code> to a neighbor. Can they predict what task will trigger it from the description alone?</p>
+</div>
+<hr>
+</section>
+<section id="skills-recap" class="level2">
+<h2 class="anchored" data-anchor-id="skills-recap">Skills — recap</h2>
+<ul>
+<li>A folder with <code>SKILL.md</code> + optional extras</li>
+<li>Loaded by <strong>name + description</strong> only; body is on-demand</li>
+<li>Auto-triggered by content match, or invoked via <code>/name</code></li>
+<li>Scope hierarchy: built-in → user → project → plugin</li>
+<li><strong>The description is the API.</strong> Spend time on it.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="part-2-mcp-servers" class="level1">
+<h1>Part 2 — MCP servers</h1>
+<hr>
+<section id="the-problem-skills-cant-solve" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-skills-cant-solve">The problem skills can’t solve</h2>
+<p>A skill is <em>text</em>. It can tell Claude <strong>what</strong> to do, but not give it new <strong>abilities</strong>.</p>
+<p>If you want Claude to:</p>
+<ul>
+<li>Query <em>your</em> PostgreSQL database</li>
+<li>Read your Gmail</li>
+<li>Drive a real browser</li>
+<li>Run a CAD tool</li>
+</ul>
+<p>…it needs <strong>code that runs</strong>. That’s MCP.</p>
+<hr>
+</section>
+<section id="what-is-mcp" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-mcp">What is MCP?</h2>
+<p><strong>Model Context Protocol</strong> — an open standard from Anthropic for connecting LLMs to tools and data.</p>
+<ul>
+<li>A small JSON-RPC protocol over <strong>stdio</strong> or <strong>HTTP</strong></li>
+<li>Spec: <code>modelcontextprotocol.io</code></li>
+<li>Many clients: Claude Code, Claude Desktop, Cursor, Zed, custom apps</li>
+<li>Many servers: filesystem, GitHub, Slack, Postgres, Playwright, … and <em>yours</em></li>
+</ul>
+<p>Think <strong>USB-C for LLMs</strong>: standard plug, anything can be on either end.</p>
+<hr>
+</section>
+<section id="what-an-mcp-server-exposes" class="level2">
+<h2 class="anchored" data-anchor-id="what-an-mcp-server-exposes">What an MCP server exposes</h2>
+<p>Three kinds of things:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 47%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>What it is</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Tool</strong></td>
+<td>A function Claude can call</td>
+<td><code>read_file(path)</code></td>
+</tr>
+<tr class="even">
+<td><strong>Resource</strong></td>
+<td>A piece of data Claude can read</td>
+<td><code>file:///etc/hosts</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Prompt</strong></td>
+<td>A pre-canned prompt template</td>
+<td><code>summarize_pr(pr_id)</code></td>
+</tr>
+</tbody>
+</table>
+<p>In practice 90% of MCP value is <strong>tools</strong>.</p>
+<hr>
+</section>
+<section id="mental-model" class="level2">
+<h2 class="anchored" data-anchor-id="mental-model">Mental model</h2>
+<pre><code>┌────────────────┐   stdio/HTTP    ┌─────────────────────┐
+│  Claude Code   │ ◄────JSON-RPC──►│   MCP server        │
+│  (the client)  │                  │   (your code/binary)│
+└────────────────┘                  └─────────────────────┘
+        ▲                                     │
+        │                                     │ talks to
+        │ "call read_file"                    ▼
+        │ "result: &lt;bytes&gt;"            ┌──────────────┐
+                                       │  filesystem, │
+                                       │  GitHub API, │
+                                       │  Postgres... │
+                                       └──────────────┘</code></pre>
+<p>The server is just a process. Claude Code spawns it (stdio) or connects to it (HTTP).</p>
+<hr>
+</section>
+<section id="skill-vs-mcp-pick-one" class="level2">
+<h2 class="anchored" data-anchor-id="skill-vs-mcp-pick-one">Skill vs MCP — pick one</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 28%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Skill</th>
+<th>MCP server</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lives as</td>
+<td>Markdown file</td>
+<td>Running process</td>
+</tr>
+<tr class="even">
+<td>Adds</td>
+<td>Instructions, prompts</td>
+<td>Tools, data sources</td>
+</tr>
+<tr class="odd">
+<td>Loaded</td>
+<td>On-demand by name</td>
+<td>At Claude Code startup</td>
+</tr>
+<tr class="even">
+<td>Implemented in</td>
+<td>Plain English</td>
+<td>Code (any language)</td>
+</tr>
+<tr class="odd">
+<td>Needs a runtime?</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Good for</td>
+<td>“How I do X”</td>
+<td>“Reach into system Y”</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="adding-an-mcp-server" class="level2">
+<h2 class="anchored" data-anchor-id="adding-an-mcp-server">Adding an MCP server</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> mcp add <span class="op">&lt;</span>name<span class="op">&gt;</span> -- <span class="op">&lt;</span>command-to-run-the-server<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Example — give Claude a sandboxed filesystem:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /tmp/student-sandbox</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> mcp add fs <span class="at">--</span> npx <span class="at">-y</span> @modelcontextprotocol/server-filesystem /tmp/student-sandbox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Restart Claude Code. Type <code>/mcp</code> to confirm the server is connected.</p>
+<hr>
+</section>
+<section id="safe-mcp-servers-to-try-in-class" class="level2">
+<h2 class="anchored" data-anchor-id="safe-mcp-servers-to-try-in-class">Safe MCP servers to try in class</h2>
+<p>All <strong>stdio</strong>, <strong>no accounts</strong>, <strong>no API keys</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 19%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Server</th>
+<th>Purpose</th>
+<th>Install</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>server-filesystem</code></td>
+<td>File ops in one dir</td>
+<td><code>npx -y @modelcontextprotocol/server-filesystem &lt;path&gt;</code></td>
+</tr>
+<tr class="even">
+<td><code>server-fetch</code></td>
+<td>HTTP GETs</td>
+<td><code>npx -y @modelcontextprotocol/server-fetch</code></td>
+</tr>
+<tr class="odd">
+<td><code>mcp-server-time</code></td>
+<td>Timezone-aware time</td>
+<td><code>uvx mcp-server-time</code></td>
+</tr>
+<tr class="even">
+<td><code>server-sqlite</code></td>
+<td>Query a local SQLite DB</td>
+<td><code>uvx mcp-server-sqlite --db-path ./classroom.db</code></td>
+</tr>
+<tr class="odd">
+<td><code>context7</code></td>
+<td>Live library docs</td>
+<td>(usually pre-installed via plugin)</td>
+</tr>
+</tbody>
+</table>
+<p>We’re <strong>skipping in class:</strong> GitHub, Slack, Gmail, computer-use — they need auth or have wide blast radius.</p>
+<hr>
+<!-- _class: exercise -->
+</section>
+<section id="exercise-b-wire-up-an-mcp-10-min" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-b-wire-up-an-mcp-10-min">Exercise B — Wire up an MCP (10 min)</h2>
+<ol type="1">
+<li>Pick two of the safe servers above</li>
+<li>Install with <code>claude mcp add ...</code></li>
+<li>Run <code>/mcp</code> — confirm both are green</li>
+<li>Ask Claude a question only solvable with that tool:
+<ul>
+<li><code>what's the time in Auckland right now?</code></li>
+<li><code>list files under the sandbox</code></li>
+<li><code>query: SELECT count(*) FROM students;</code></li>
+</ul></li>
+<li>Open <code>~/.claude.json</code> (or your <code>.mcp.json</code>) — read the actual config you just wrote</li>
+</ol>
+<div class="gap">
+<p>GAP — kill one of the server processes (<code>pkill -f mcp-server</code>). What does Claude say next time you ask? Recover.</p>
+</div>
+<hr>
+</section>
+<section id="when-mcp-gets-dangerous" class="level2">
+<h2 class="anchored" data-anchor-id="when-mcp-gets-dangerous">When MCP gets dangerous</h2>
+<p>The protocol itself is fine; the <em>server</em> is the question.</p>
+<ul>
+<li><strong>Auth scope creep</strong>: a GitHub MCP with full write access can <code>git push --force</code> to main.</li>
+<li><strong>Network MCPs</strong>: a <code>fetch</code> server can hit <em>any</em> URL — including internal IPs.</li>
+<li><strong>Filesystem</strong>: <code>server-filesystem /</code> is a terrible idea; always scope to a directory.</li>
+<li><strong>Computer-use</strong> (the desktop control one): full control of your mouse/keyboard.</li>
+</ul>
+<p><strong>Principle of least authority.</strong> Same rules as adding a Chrome extension — what is it allowed to touch?</p>
+<hr>
+</section>
+<section id="where-mcp-configs-live" class="level2">
+<h2 class="anchored" data-anchor-id="where-mcp-configs-live">Where MCP configs live</h2>
+<ul>
+<li><strong>User-wide:</strong> <code>~/.claude.json</code> — applies to every Claude Code session</li>
+<li><strong>Project-wide:</strong> <code>.mcp.json</code> at repo root — shared with teammates via git</li>
+<li>The <code>claude mcp add</code> CLI just edits these files for you</li>
+</ul>
+<p>A repo can pin its required MCPs. New contributors run <code>claude mcp install</code> and they’re up.</p>
+<hr>
+</section>
+<section id="building-your-own-mcp-server" class="level2">
+<h2 class="anchored" data-anchor-id="building-your-own-mcp-server">Building your own MCP server</h2>
+<p>Two easy starting points:</p>
+<ol type="1">
+<li>The official skill <strong><code>mcp-builder</code></strong> — scaffolds a server from a spec.</li>
+<li><code>npm create mcp-server</code> or <code>uv</code> + <code>mcp</code> Python SDK.</li>
+</ol>
+<p>Server skeleton (Python):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mcp.server.fastmcp <span class="im">import</span> FastMCP</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mcp <span class="op">=</span> FastMCP(<span class="st">"my-toy"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">@mcp.tool</span>()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add(a: <span class="bu">int</span>, b: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> b</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>mcp.run()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That’s a working MCP server. <code>claude mcp add toy -- python my_server.py</code> and you can call <code>add</code> from Claude.</p>
+<hr>
+</section>
+<section id="recap-skills-vs-mcp" class="level2">
+<h2 class="anchored" data-anchor-id="recap-skills-vs-mcp">Recap — Skills vs MCP</h2>
+<div class="two">
+<section id="reach-for-a-skill-when" class="level3">
+<h3 class="anchored" data-anchor-id="reach-for-a-skill-when">Reach for a skill when…</h3>
+<ul>
+<li>the answer is <em>instructions</em></li>
+<li>you want it triggered by topic</li>
+<li>you want it on-demand &amp; cheap</li>
+<li>it’s shareable as a file</li>
+</ul>
+</section>
+<section id="reach-for-an-mcp-when" class="level3">
+<h3 class="anchored" data-anchor-id="reach-for-an-mcp-when">Reach for an MCP when…</h3>
+<ul>
+<li>you need <em>new tools</em></li>
+<li>you need to talk to a running system</li>
+<li>you have code that already does the thing</li>
+<li>you want it available every session</li>
+</ul>
+</section>
+</div>
+<hr>
+</section>
+<section id="homework" class="level2">
+<h2 class="anchored" data-anchor-id="homework">Homework</h2>
+<ol type="1">
+<li><strong>One skill.</strong> Automate something you actually did this week. ≤ 30 lines of body.</li>
+<li><strong>One MCP.</strong> Add a server beyond the ones we tried in class. Write a paragraph: <em>what new tasks does it unlock and what risks does it bring?</em></li>
+<li>Submit both as a PR to your fork of the class repo.</li>
+</ol>
+<p>Due: next week’s session.</p>
+<hr>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<ul>
+<li>Skills repo: <code>github.com/anthropics/skills</code></li>
+<li>MCP spec: <code>modelcontextprotocol.io</code></li>
+<li>MCP server registry: <code>github.com/modelcontextprotocol/servers</code></li>
+<li>Claude Code docs: <code>docs.claude.com/claude-code</code></li>
+<li>Office hours: Thursdays after class</li>
+</ul>
+<div class="gap">
+<p>GAP — open Q&amp;A</p>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/venpopov\.github\.io\/FS26-Scientific-Computing\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

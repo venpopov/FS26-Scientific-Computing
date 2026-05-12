@@ -7,6 +7,76 @@
     "text": "No matching items"
   },
   {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Audience: Programming students. Last week: intro to Claude Code (chat, edits, basic tools). This week: extending Claude with skills (instructions on demand) and MCP servers (external tools/data). Total time: ~90 min (30 lecture + 30 exercises + 20 build-your-own + 10 wrap).\n\n\n\nBy the end students can:\n\nExplain the difference between a skill (a prompt-shaped instruction file) and an MCP server (a process exposing tools/resources).\nInstall a public skill, see it auto-trigger, and invoke it explicitly with /skill-name.\nRead a SKILL.md and predict whether Claude will load it for a given task.\nWrite a minimal skill themselves (with Claude’s help via skill-creator).\nAdd an MCP server to Claude Code and call one of its tools.\nDecide which mechanism (skill vs MCP) suits a given problem.\n\n\n\n\n\n\nClaude Code installed and working (from last week).\nA free GitHub account (only needed for one optional MCP).\nnode ≥ 20 and uvx or npx available (npx --version works = good).\nClone the demo repo (a tiny throwaway repo with sample PDFs, CSVs, and a junk SQLite DB) — instructor provides URL.\n\n\n\n\n\n\n\n\n\n\n\n\n\nTime\nBlock\nMode\n\n\n\n\n0–10\nRecap + motivation: “why extend?”\nSlides + discussion\n\n\n10–25\nSkills: what, where, when, how\nSlides\n\n\n25–45\nExercise A — install + drive-test\nHands-on\n\n\n45–55\nBuild-your-own skill with skill-creator\nLive demo + hands-on\n\n\n55–75\nMCP servers: the protocol, mental model\nSlides\n\n\n75–85\nExercise B — wire up an MCP\nHands-on\n\n\n85–90\nWrap, when-to-use-which, homework\nSlides\n\n\n\n\n\n\n\nUse Anthropic’s official skills repo: https://github.com/anthropics/skills.\nRecommended starter skills (all read-only, no secrets, no network):\n\npdf — extract text and tables from a PDF. Safe: pure file processing.\ndocx / xlsx / pptx — read/write Office docs. Safe: local files only.\nmcp-builder — meta-skill that teaches Claude to scaffold an MCP server. Safe: only writes files.\n\nInstall path: copy the chosen skill folder into ~/.claude/skills/&lt;skill-name&gt;/ so SKILL.md lives at ~/.claude/skills/&lt;skill-name&gt;/SKILL.md.\nDrive-test tasks (give one to each student, or pairs):\n\nHand Claude sample.pdf and ask: “summarize page 3” → watch the pdf skill auto-trigger.\nAsk explicitly: /pdf extract all tables from quarterly.pdf as CSV.\nInspect: ask Claude which skills are loaded right now? which one would you use for X?\n\nDiscussion prompt: open the skill’s SKILL.md. What’s in the frontmatter? What’s in the body? When did Claude load the body?\n\n\n\n\nHave students run:\n/skill-creator make a skill called \"uzh-citation\" that, given a DOI, fetches the citation\nin APA format and inserts it into the open document\nWalk through the result: name, description, body, any allowed-tools. Discuss why the description must include trigger phrases like “DOI”, “citation”, “APA” — Claude only sees the description at trigger time.\n\n\n\n\nRecommended starters (all stdio, no auth, no external accounts):\n\n\n\n\n\n\n\n\nServer\nWhat it gives Claude\nRisk\n\n\n\n\n@modelcontextprotocol/server-filesystem\nRead/write files in a chosen dir\nLow (sandboxed to path)\n\n\n@modelcontextprotocol/server-fetch\nHTTP GETs\nLow\n\n\n@modelcontextprotocol/server-time\nTimezone-aware now()\nNone\n\n\n@modelcontextprotocol/server-sqlite\nQuery a local SQLite DB\nLow\n\n\ncontext7 (already installed for many)\nLive library/API docs lookup\nNone\n\n\n\nSkip in class (need auth or have wider blast radius): GitHub MCP, Slack MCP, Gmail MCP, computer-use.\nInstall pattern:\nclaude mcp add fs -- npx -y @modelcontextprotocol/server-filesystem /tmp/student-sandbox\nclaude mcp add time -- uvx mcp-server-time\nThen in a new Claude Code session, ask: “list files in the sandbox” or “what’s the current time in Tokyo?” and watch the tools light up.\nDiscussion: run /mcp to see the server status. Open ~/.claude.json or .mcp.json and look at the actual config. What changes if the server dies?\n\n\n\n\n\n\n\nNeed\nReach for\n\n\n\n\n“Whenever the task looks like X, remember Y”\nSkill\n\n\n“Give Claude a new ability that requires code”\nMCP\n\n\n“Codify a workflow / checklist / output style”\nSkill\n\n\n“Access an external system (DB, API, app)”\nMCP\n\n\n“Bundle a domain expert prompt”\nSkill\n\n\n\nQuick mantra: skills are knowledge; MCPs are capabilities.\n\n\n\n\n\nWrite one skill that automates something you actually did this week (≤ 30 lines of body).\nAdd one MCP server you’d use beyond class (e.g., GitHub MCP with a read-only PAT) and answer in a paragraph: what new tasks does it unlock?\nSubmit both via PR to your fork of the class repo.\n\n\n\n\n\n\n“Why didn’t my skill trigger?” → The description didn’t match the task vocabulary, or another skill matched better. Show: cat ~/.claude/skills/&lt;name&gt;/SKILL.md and revise the description.\n“Where’s the skill’s body until I use it?” → Disk. Only the name + description enter context up front; the body loads when invoked. (Progressive disclosure.)\n“Why don’t I see my MCP tools?” → Run /mcp. The server may have failed to start (bad path, missing binary, wrong syntax in the JSON).\n“Can I share a skill with a teammate?” → Yes: commit it under .claude/skills/ in a repo, or publish as part of a plugin.\n“Skill vs. CLAUDE.md?” → CLAUDE.md is always loaded; skills load on demand. Use CLAUDE.md for always-true facts, skills for sometimes-relevant procedures."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#learning-goals",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#learning-goals",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "By the end students can:\n\nExplain the difference between a skill (a prompt-shaped instruction file) and an MCP server (a process exposing tools/resources).\nInstall a public skill, see it auto-trigger, and invoke it explicitly with /skill-name.\nRead a SKILL.md and predict whether Claude will load it for a given task.\nWrite a minimal skill themselves (with Claude’s help via skill-creator).\nAdd an MCP server to Claude Code and call one of its tools.\nDecide which mechanism (skill vs MCP) suits a given problem."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#pre-class-checklist-send-the-night-before",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#pre-class-checklist-send-the-night-before",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Claude Code installed and working (from last week).\nA free GitHub account (only needed for one optional MCP).\nnode ≥ 20 and uvx or npx available (npx --version works = good).\nClone the demo repo (a tiny throwaway repo with sample PDFs, CSVs, and a junk SQLite DB) — instructor provides URL."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#lecture-flow",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#lecture-flow",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Time\nBlock\nMode\n\n\n\n\n0–10\nRecap + motivation: “why extend?”\nSlides + discussion\n\n\n10–25\nSkills: what, where, when, how\nSlides\n\n\n25–45\nExercise A — install + drive-test\nHands-on\n\n\n45–55\nBuild-your-own skill with skill-creator\nLive demo + hands-on\n\n\n55–75\nMCP servers: the protocol, mental model\nSlides\n\n\n75–85\nExercise B — wire up an MCP\nHands-on\n\n\n85–90\nWrap, when-to-use-which, homework\nSlides"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#exercise-a-install-and-drive-test-a-public-skill",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#exercise-a-install-and-drive-test-a-public-skill",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Use Anthropic’s official skills repo: https://github.com/anthropics/skills.\nRecommended starter skills (all read-only, no secrets, no network):\n\npdf — extract text and tables from a PDF. Safe: pure file processing.\ndocx / xlsx / pptx — read/write Office docs. Safe: local files only.\nmcp-builder — meta-skill that teaches Claude to scaffold an MCP server. Safe: only writes files.\n\nInstall path: copy the chosen skill folder into ~/.claude/skills/&lt;skill-name&gt;/ so SKILL.md lives at ~/.claude/skills/&lt;skill-name&gt;/SKILL.md.\nDrive-test tasks (give one to each student, or pairs):\n\nHand Claude sample.pdf and ask: “summarize page 3” → watch the pdf skill auto-trigger.\nAsk explicitly: /pdf extract all tables from quarterly.pdf as CSV.\nInspect: ask Claude which skills are loaded right now? which one would you use for X?\n\nDiscussion prompt: open the skill’s SKILL.md. What’s in the frontmatter? What’s in the body? When did Claude load the body?"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#build-your-own-skill-live-demo-10-min-student-attempt",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#build-your-own-skill-live-demo-10-min-student-attempt",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Have students run:\n/skill-creator make a skill called \"uzh-citation\" that, given a DOI, fetches the citation\nin APA format and inserts it into the open document\nWalk through the result: name, description, body, any allowed-tools. Discuss why the description must include trigger phrases like “DOI”, “citation”, “APA” — Claude only sees the description at trigger time."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#exercise-b-wire-up-an-mcp-server",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#exercise-b-wire-up-an-mcp-server",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Recommended starters (all stdio, no auth, no external accounts):\n\n\n\n\n\n\n\n\nServer\nWhat it gives Claude\nRisk\n\n\n\n\n@modelcontextprotocol/server-filesystem\nRead/write files in a chosen dir\nLow (sandboxed to path)\n\n\n@modelcontextprotocol/server-fetch\nHTTP GETs\nLow\n\n\n@modelcontextprotocol/server-time\nTimezone-aware now()\nNone\n\n\n@modelcontextprotocol/server-sqlite\nQuery a local SQLite DB\nLow\n\n\ncontext7 (already installed for many)\nLive library/API docs lookup\nNone\n\n\n\nSkip in class (need auth or have wider blast radius): GitHub MCP, Slack MCP, Gmail MCP, computer-use.\nInstall pattern:\nclaude mcp add fs -- npx -y @modelcontextprotocol/server-filesystem /tmp/student-sandbox\nclaude mcp add time -- uvx mcp-server-time\nThen in a new Claude Code session, ask: “list files in the sandbox” or “what’s the current time in Tokyo?” and watch the tools light up.\nDiscussion: run /mcp to see the server status. Open ~/.claude.json or .mcp.json and look at the actual config. What changes if the server dies?"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#when-to-use-which",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#when-to-use-which",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Need\nReach for\n\n\n\n\n“Whenever the task looks like X, remember Y”\nSkill\n\n\n“Give Claude a new ability that requires code”\nMCP\n\n\n“Codify a workflow / checklist / output style”\nSkill\n\n\n“Access an external system (DB, API, app)”\nMCP\n\n\n“Bundle a domain expert prompt”\nSkill\n\n\n\nQuick mantra: skills are knowledge; MCPs are capabilities."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#homework",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#homework",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "Write one skill that automates something you actually did this week (≤ 30 lines of body).\nAdd one MCP server you’d use beyond class (e.g., GitHub MCP with a read-only PAT) and answer in a paragraph: what new tasks does it unlock?\nSubmit both via PR to your fork of the class repo."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#instructor-cheat-sheet-likely-student-questions",
+    "href": "lecture-materials/claude-skills-and-mcp/LECTURE_PLAN.html#instructor-cheat-sheet-likely-student-questions",
+    "title": "Week 2 — Extending Claude Code: Skills & MCP Servers",
+    "section": "",
+    "text": "“Why didn’t my skill trigger?” → The description didn’t match the task vocabulary, or another skill matched better. Show: cat ~/.claude/skills/&lt;name&gt;/SKILL.md and revise the description.\n“Where’s the skill’s body until I use it?” → Disk. Only the name + description enter context up front; the body loads when invoked. (Progressive disclosure.)\n“Why don’t I see my MCP tools?” → Run /mcp. The server may have failed to start (bad path, missing binary, wrong syntax in the JSON).\n“Can I share a skill with a teammate?” → Yes: commit it under .claude/skills/ in a repo, or publish as part of a plugin.\n“Skill vs. CLAUDE.md?” → CLAUDE.md is always loaded; skills load on demand. Use CLAUDE.md for always-true facts, skills for sometimes-relevant procedures."
+  },
+  {
     "objectID": "exercises/E001_calculating_PI.html",
     "href": "exercises/E001_calculating_PI.html",
     "title": "E001: Calculating PI",
@@ -175,6 +245,216 @@
     "text": "Outlook: Rough list of topics to cover\n\n\n\nbasic programming concepts\n\ndata structures\ncontrol statements - if, while, loops\nfunctions\nobjects\nscope\nalgorithms\nrandomness, seeds, distributions\ntips & tricks\nproblem-solving\n\n\n\n\nfilesystem, project organization & command line tools\nversion control & collaboration\ndependency/environment management & cluster/cloud computing\nprofiling, optimization and debugging\ntesting, documentation & reporting\n(maybe: useful math refresher)"
   },
   {
+    "objectID": "slides/claude-skills-and-mcp.html#where-we-left-off",
+    "href": "slides/claude-skills-and-mcp.html#where-we-left-off",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Where we left off",
+    "text": "Where we left off\nLast week you could:\n\nOpen Claude Code in a project\nAsk it to read, edit, and run code\nUse the built-in tools: Read, Edit, Bash, Grep, etc.\n\n\nToday: two new ways to extend Claude itself."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#two-new-vocab-words",
+    "href": "slides/claude-skills-and-mcp.html#two-new-vocab-words",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Two new vocab words",
+    "text": "Two new vocab words\n\n\nSkill\nA bundle of instructions Claude can choose to load on demand.\n“Here’s how I want you to handle X.”\nLives as a markdown file on disk.\n\nMCP server\nA process that exposes new tools and data over a standard protocol.\n“Here are abilities you didn’t have before.”\nLives as a running program.\n\n\n\nMantra: skills are knowledge, MCPs are capabilities."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#why-bother",
+    "href": "slides/claude-skills-and-mcp.html#why-bother",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Why bother?",
+    "text": "Why bother?\n\nThe base model is generic. You are not.\nRepeated procedures → put in a skill, stop re-typing them.\nExternal systems (DBs, APIs, your editor) → MCP, stop pasting screenshots.\nLower context cost: skills load only when needed."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#what-is-a-skill-concretely",
+    "href": "slides/claude-skills-and-mcp.html#what-is-a-skill-concretely",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "What is a skill, concretely?",
+    "text": "What is a skill, concretely?\nA folder. Inside: a SKILL.md. That’s it.\n~/.claude/skills/\n└── citation-helper/\n    ├── SKILL.md          ← required\n    └── (optional: templates, scripts, examples)\nSKILL.md has YAML frontmatter + a markdown body."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#the-minimum-skill.md",
+    "href": "slides/claude-skills-and-mcp.html#the-minimum-skill.md",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "The minimum SKILL.md",
+    "text": "The minimum SKILL.md\n---\nname: citation-helper\ndescription: Convert a DOI or arXiv ID into a properly formatted\n  APA citation. Use whenever the user mentions DOI, arXiv,\n  citation, references, or bibliography.\n---\n\n# How to use this skill\n\n1. Extract the identifier from the user's message.\n2. Fetch metadata from the public Crossref API.\n3. Format as APA 7 and return *only* the citation string.\n\nTwo things matter for triggering: the name and the description."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#where-skills-come-from-load-order",
+    "href": "slides/claude-skills-and-mcp.html#where-skills-come-from-load-order",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Where skills come from (load order)",
+    "text": "Where skills come from (load order)\nClaude Code looks in several places. Roughly:\n\nBuilt-in skills shipped with Claude Code (e.g. init, review, security-review)\nUser-level: ~/.claude/skills/&lt;name&gt;/SKILL.md — yours, for every project\nProject-level: .claude/skills/&lt;name&gt;/SKILL.md — checked into the repo, team-shared\nPlugins: installed plugin packages can ship skills\n\n\nIf two skills share a name, the more specific scope wins (project &gt; user &gt; built-in)."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#how-does-claude-decide-to-use-a-skill",
+    "href": "slides/claude-skills-and-mcp.html#how-does-claude-decide-to-use-a-skill",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "How does Claude decide to use a skill?",
+    "text": "How does Claude decide to use a skill?\nAt session start, Claude sees a list like:\nAvailable skills:\n- pdf: Extract text, tables, and images from PDF files...\n- citation-helper: Convert DOI or arXiv ID into APA citation...\n- skill-creator: Create new skills, modify and improve existing skills...\n\nJust the name + description. Not the body.\n\n\nWhen your prompt arrives, Claude matches your task against those descriptions and calls the Skill tool if one fits. The body loads then.\n\n\nThis is progressive disclosure — your context window stays cheap."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#two-ways-to-fire-a-skill",
+    "href": "slides/claude-skills-and-mcp.html#two-ways-to-fire-a-skill",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Two ways to fire a skill",
+    "text": "Two ways to fire a skill\n\n\nAuto-trigger\nYou ask:\n\nSummarize page 3 of report.pdf\n\nClaude sees pdf matches → loads it → uses it.\n\nExplicit\nYou type:\n\n/pdf extract tables from report.pdf\n\nAlways loads the named skill.\n\n\nThe slash form is your safety net when auto-trigger doesn’t pick the right one."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#anatomy-of-a-good-description",
+    "href": "slides/claude-skills-and-mcp.html#anatomy-of-a-good-description",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Anatomy of a good description",
+    "text": "Anatomy of a good description\nBad:\n\nHelps with documents.\n\n\nGood:\n\nConvert a DOI or arXiv ID into APA 7 citation. Use when the user mentions DOI, arXiv, bibliography, references, or asks to format a citation.\n\n\n\nRule of thumb: list the trigger words a user would actually say. Claude is doing fuzzy keyword matching against your description."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#exercise-a-install-drive-test-a-skill",
+    "href": "slides/claude-skills-and-mcp.html#exercise-a-install-drive-test-a-skill",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Exercise A — Install & drive-test a skill",
+    "text": "Exercise A — Install & drive-test a skill\n\n\n\n\n\n\n\n20 minutes\n\n\n\nVisit github.com/anthropics/skills\nPick one of: pdf, docx, xlsx, pptx\nCopy the folder into ~/.claude/skills/\nRestart Claude Code\nTry auto-trigger: ask a natural question about the sample file in the class repo\nTry explicit: invoke with /skill-name ...\nOpen SKILL.md. Predict: would Claude trigger this for “clean up my résumé”? Why / why not?\n\n\n\n\n\n\n\n\n\n\n\n\nPair & share\n\n\nExchange one finding with a neighbour: what surprised you? Anyone get the wrong skill to fire?"
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#building-your-own-skill-creator",
+    "href": "slides/claude-skills-and-mcp.html#building-your-own-skill-creator",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Building your own — skill-creator",
+    "text": "Building your own — skill-creator\nAnthropic ships a meta-skill for this. Run:\n/skill-creator\n\nTell it what you want. It will:\n\npick a name\ndraft the description (the load-bearing part!)\nscaffold the body\nwrite the file to ~/.claude/skills/...\n\n\n\nThen you can edit it like any other file."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#mini-exercise-make-one-yourself",
+    "href": "slides/claude-skills-and-mcp.html#mini-exercise-make-one-yourself",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Mini-exercise — make one yourself",
+    "text": "Mini-exercise — make one yourself\n\n\n\n\n\n\n\n10 minutes\n\n\nBuild a skill that automates something you already do by hand.\nExamples to seed ideas:\n\n“Reformat my commit messages to conventional-commits style”\n“Turn my lecture notes into Anki flashcards”\n“Generate a uv-style pyproject.toml from a list of imports”\n\n\n\n\n\n\n\n\n\n\n\n\nShow & predict\n\n\nShow your SKILL.md to a neighbour. Can they predict what task will trigger it from the description alone?"
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#skills-recap",
+    "href": "slides/claude-skills-and-mcp.html#skills-recap",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Skills — recap",
+    "text": "Skills — recap\n\nA folder with SKILL.md + optional extras\nLoaded by name + description only; body is on-demand\nAuto-triggered by content match, or invoked via /name\nScope hierarchy: built-in → user → project → plugin\nThe description is the API. Spend time on it."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#the-problem-skills-cant-solve",
+    "href": "slides/claude-skills-and-mcp.html#the-problem-skills-cant-solve",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "The problem skills can’t solve",
+    "text": "The problem skills can’t solve\nA skill is text. It can tell Claude what to do, but not give it new abilities.\n\nIf you want Claude to:\n\nQuery your PostgreSQL database\nRead your Gmail\nDrive a real browser\nRun a CAD tool\n\n\n\n…it needs code that runs. That’s MCP."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#what-is-mcp",
+    "href": "slides/claude-skills-and-mcp.html#what-is-mcp",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "What is MCP?",
+    "text": "What is MCP?\nModel Context Protocol — an open standard from Anthropic for connecting LLMs to tools and data.\n\nA small JSON-RPC protocol over stdio or HTTP\nSpec: modelcontextprotocol.io\nMany clients: Claude Code, Claude Desktop, Cursor, Zed, custom apps\nMany servers: filesystem, GitHub, Slack, Postgres, Playwright, … and yours\n\n\nThink USB-C for LLMs: standard plug, anything can be on either end."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#what-an-mcp-server-exposes",
+    "href": "slides/claude-skills-and-mcp.html#what-an-mcp-server-exposes",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "What an MCP server exposes",
+    "text": "What an MCP server exposes\nThree kinds of things:\n\n\n\n\n\n\n\n\nType\nWhat it is\nExample\n\n\n\n\nTool\nA function Claude can call\nread_file(path)\n\n\nResource\nA piece of data Claude can read\nfile:///etc/hosts\n\n\nPrompt\nA pre-canned prompt template\nsummarize_pr(pr_id)\n\n\n\n\nIn practice 90% of MCP value is tools."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#mental-model",
+    "href": "slides/claude-skills-and-mcp.html#mental-model",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Mental model",
+    "text": "Mental model\n┌────────────────┐   stdio/HTTP    ┌─────────────────────┐\n│  Claude Code   │ ◄────JSON-RPC──►│   MCP server        │\n│  (the client)  │                  │   (your code/binary)│\n└────────────────┘                  └─────────────────────┘\n        ▲                                     │\n        │                                     │ talks to\n        │ \"call read_file\"                    ▼\n        │ \"result: &lt;bytes&gt;\"            ┌──────────────┐\n                                       │  filesystem, │\n                                       │  GitHub API, │\n                                       │  Postgres... │\n                                       └──────────────┘\nThe server is just a process. Claude Code spawns it (stdio) or connects to it (HTTP)."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#skill-vs-mcp-pick-one",
+    "href": "slides/claude-skills-and-mcp.html#skill-vs-mcp-pick-one",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Skill vs MCP — pick one",
+    "text": "Skill vs MCP — pick one\n\n\n\n\n\n\n\n\n\nSkill\nMCP server\n\n\n\n\nLives as\nMarkdown file\nRunning process\n\n\nAdds\nInstructions, prompts\nTools, data sources\n\n\nLoaded\nOn-demand by name\nAt Claude Code startup\n\n\nImplemented in\nPlain English\nCode (any language)\n\n\nNeeds a runtime?\nNo\nYes\n\n\nGood for\n“How I do X”\n“Reach into system Y”"
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#adding-an-mcp-server",
+    "href": "slides/claude-skills-and-mcp.html#adding-an-mcp-server",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Adding an MCP server",
+    "text": "Adding an MCP server\nclaude mcp add &lt;name&gt; -- &lt;command-to-run-the-server&gt;\n\nExample — give Claude a sandboxed filesystem:\nmkdir -p /tmp/student-sandbox\nclaude mcp add fs -- npx -y @modelcontextprotocol/server-filesystem /tmp/student-sandbox\n\n\nRestart Claude Code. Type /mcp to confirm the server is connected."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#safe-mcp-servers-to-try-in-class",
+    "href": "slides/claude-skills-and-mcp.html#safe-mcp-servers-to-try-in-class",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Safe MCP servers to try in class",
+    "text": "Safe MCP servers to try in class\nAll stdio, no accounts, no API keys:\n\n\n\n\n\n\n\n\nServer\nPurpose\nInstall\n\n\n\n\nserver-filesystem\nFile ops in one dir\nnpx -y @modelcontextprotocol/server-filesystem &lt;path&gt;\n\n\nserver-fetch\nHTTP GETs\nnpx -y @modelcontextprotocol/server-fetch\n\n\nmcp-server-time\nTimezone-aware time\nuvx mcp-server-time\n\n\nserver-sqlite\nQuery a local SQLite DB\nuvx mcp-server-sqlite --db-path ./classroom.db\n\n\ncontext7\nLive library docs\n(often pre-installed via plugin)\n\n\n\n\nSkipping in class: GitHub, Slack, Gmail, computer-use — they need auth or have wide blast radius."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#exercise-b-wire-up-an-mcp",
+    "href": "slides/claude-skills-and-mcp.html#exercise-b-wire-up-an-mcp",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Exercise B — Wire up an MCP",
+    "text": "Exercise B — Wire up an MCP\n\n\n\n\n\n\n\n10 minutes\n\n\n\nPick two of the safe servers above\nInstall with claude mcp add ...\nRun /mcp — confirm both are green\nAsk Claude a question only solvable with that tool:\n\nwhat's the time in Auckland right now?\nlist files under the sandbox\nquery: SELECT count(*) FROM students;\n\nOpen ~/.claude.json (or your .mcp.json) — read the actual config you just wrote\n\n\n\n\n\n\n\n\n\n\n\n\nBreak it & fix it\n\n\nKill one of the server processes (pkill -f mcp-server). What does Claude say next time you ask? Recover."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#when-mcp-gets-dangerous",
+    "href": "slides/claude-skills-and-mcp.html#when-mcp-gets-dangerous",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "When MCP gets dangerous",
+    "text": "When MCP gets dangerous\nThe protocol itself is fine; the server is the question.\n\nAuth scope creep: a GitHub MCP with full write access can git push --force to main.\nNetwork MCPs: a fetch server can hit any URL — including internal IPs.\nFilesystem: server-filesystem / is a terrible idea; always scope to a directory.\nComputer-use (the desktop control one): full control of your mouse/keyboard.\n\n\nPrinciple of least authority. Same rules as adding a Chrome extension — what is it allowed to touch?"
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#where-mcp-configs-live",
+    "href": "slides/claude-skills-and-mcp.html#where-mcp-configs-live",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Where MCP configs live",
+    "text": "Where MCP configs live\n\nUser-wide: ~/.claude.json — applies to every Claude Code session\nProject-wide: .mcp.json at repo root — shared with teammates via git\nThe claude mcp add CLI just edits these files for you\n\n\nA repo can pin its required MCPs. New contributors run claude mcp install and they’re up."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#building-your-own-mcp-server",
+    "href": "slides/claude-skills-and-mcp.html#building-your-own-mcp-server",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Building your own MCP server",
+    "text": "Building your own MCP server\nTwo easy starting points:\n\nThe official skill mcp-builder — scaffolds a server from a spec.\nnpm create mcp-server or uv + mcp Python SDK.\n\n\nServer skeleton (Python):\nfrom mcp.server.fastmcp import FastMCP\nmcp = FastMCP(\"my-toy\")\n\n@mcp.tool()\ndef add(a: int, b: int) -&gt; int:\n    return a + b\n\nmcp.run()\n\n\nThat’s a working MCP server. claude mcp add toy -- python my_server.py and you can call add from Claude."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#recap-skills-vs-mcp",
+    "href": "slides/claude-skills-and-mcp.html#recap-skills-vs-mcp",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Recap — Skills vs MCP",
+    "text": "Recap — Skills vs MCP\n\n\nReach for a skill when…\n\nthe answer is instructions\nyou want it triggered by topic\nyou want it on-demand & cheap\nit’s shareable as a file\n\n\nReach for an MCP when…\n\nyou need new tools\nyou need to talk to a running system\nyou have code that already does the thing\nyou want it available every session"
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#homework",
+    "href": "slides/claude-skills-and-mcp.html#homework",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Homework",
+    "text": "Homework\n\nOne skill. Automate something you actually did this week. ≤ 30 lines of body.\nOne MCP. Add a server beyond the ones we tried in class. Write a paragraph: what new tasks does it unlock and what risks does it bring?\nSubmit both as a PR to your fork of the class repo.\n\n\nDue: next week’s session."
+  },
+  {
+    "objectID": "slides/claude-skills-and-mcp.html#resources",
+    "href": "slides/claude-skills-and-mcp.html#resources",
+    "title": "Extending Claude Code: Skills & MCP Servers",
+    "section": "Resources",
+    "text": "Resources\n\nSkills repo: github.com/anthropics/skills\nMCP spec: modelcontextprotocol.io\nMCP server registry: github.com/modelcontextprotocol/servers\nClaude Code docs: docs.claude.com/claude-code\n\n\n\n\n\n\n\n\n\nQ&A\n\n\nOpen floor — what would you want to extend Claude with for your projects?"
+  },
+  {
+    "objectID": "resources/textbooks.html",
+    "href": "resources/textbooks.html",
+    "title": "Annotated list of learning resources",
+    "section": "",
+    "text": "Beginners\n\nHands-on programming with R – if you know nothing about R, start here\nThe Art of R Programming\n\nBeginners with focus on data analysis (good, but not the focus of this course)\n\nR for Data Science - focused on data wrangling and visualization\nTelling Stories with Data - have not read it, but seems to be a higher level tour of tasks in data science focused on breath rather than depth\n\nAdvanced\n\nAdvanced R - excellent for developing a deeper understanding of R\nR Packages - excellent guide for developing packages for R\nThe R Inferno - absolutely fantastic; about the tricky parts of the language\n\nWorkflow\n\nWhat they forgot to teach you about R - workflow related good advice\nBuilding reproducible analytical pipelines with R - a really good guide for improving reproducibility in R and generally for best coding practices"
+  },
+  {
+    "objectID": "resources/glossary.html",
+    "href": "resources/glossary.html",
+    "title": "Glossary",
+    "section": "",
+    "text": "Term\nExplanation\n\n\n\n\nREPL\nRead-eval-print-loop - an interactive environment which takes user input, evaluates or executes it, and prints the result.\nExamples: the R console, the terminal shell, an ipython interpreter\n\n\nSSH key\n\n\n\nunit test\n\n\n\ncompiler\n\n\n\nterminal\n\n\n\nfile path\n\n\n\ncontrol flow"
+  },
+  {
+    "objectID": "slides.html",
+    "href": "slides.html",
+    "title": "Course slides",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExtending Claude Code: Skills & MCP Servers\n\n\nVen Popov\n\n\n\n\n\n\nFS26 “What I wish someone taught me 10 years ago”\n\n\nVen Popov\n\n\n\n\n\n\nThe Structure of a Program\n\n\nVen Popov\n\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "FS26 Introduction to programming and scientific computing",
@@ -194,27 +474,6 @@
     "title": "FS26 Introduction to programming and scientific computing",
     "section": "Learning outcomes",
     "text": "Learning outcomes\n\nBe able to use git & Github for version control and sharing code\nBe able to work with a command line interface\nBe able to create reproducible software projects in R\nUnderstand absolute and relative filepaths and how to organize software projects and code\nBe able to use if/else statements, for/while statements, and write custom functions in R\nUnderstand how to store data and access data in different data structures such as vectors, lists, data.frames. matrices and so on"
-  },
-  {
-    "objectID": "slides.html",
-    "href": "slides.html",
-    "title": "Course slides",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nFS26 “What I wish someone taught me 10 years ago”\n\n\nVen Popov\n\n\n\n\n\n\nThe Structure of a Program\n\n\nVen Popov\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "resources/glossary.html",
-    "href": "resources/glossary.html",
-    "title": "Glossary",
-    "section": "",
-    "text": "Term\nExplanation\n\n\n\n\nREPL\nRead-eval-print-loop - an interactive environment which takes user input, evaluates or executes it, and prints the result.\nExamples: the R console, the terminal shell, an ipython interpreter\n\n\nSSH key\n\n\n\nunit test\n\n\n\ncompiler\n\n\n\nterminal\n\n\n\nfile path\n\n\n\ncontrol flow"
-  },
-  {
-    "objectID": "resources/textbooks.html",
-    "href": "resources/textbooks.html",
-    "title": "Annotated list of learning resources",
-    "section": "",
-    "text": "Beginners\n\nHands-on programming with R – if you know nothing about R, start here\nThe Art of R Programming\n\nBeginners with focus on data analysis (good, but not the focus of this course)\n\nR for Data Science - focused on data wrangling and visualization\nTelling Stories with Data - have not read it, but seems to be a higher level tour of tasks in data science focused on breath rather than depth\n\nAdvanced\n\nAdvanced R - excellent for developing a deeper understanding of R\nR Packages - excellent guide for developing packages for R\nThe R Inferno - absolutely fantastic; about the tricky parts of the language\n\nWorkflow\n\nWhat they forgot to teach you about R - workflow related good advice\nBuilding reproducible analytical pipelines with R - a really good guide for improving reproducibility in R and generally for best coding practices"
   },
   {
     "objectID": "slides/week1.html#fundamentals-of-programming-for-scientific-computing",
@@ -383,5 +642,208 @@
     "title": "E006: Optimizations",
     "section": "5. Logo",
     "text": "5. Logo\nNow try to make your own Logo code faster. To begin, you might want to start by profiling your code, as described here: https://adv-r.hadley.nz/perf-measure.html\n\n\n\n\n\n\nTip\n\n\n\nFor this, you’ll need a plain R script, which you can create like this:\n\nlibrary(profvis)\nlibrary(bench)\nlibrary(knitr)\n\n# convert your file to a R Script\npurl(\"LOGO/LOGO_Hubi.qmd\", output = \"LOGO/LOGO_profiling.R\")\n\n# loading this file as a source\nsource(\"LOGO/LOGO_profiling.R\")\n\n# then run your logo inside profvis()\nprofvis(run_LOGO(\"CS SP [-pi/5] [-Sin(PI/2)/2] sPc [black]\n                 REPEAT 20 [RepeaT 180 [FD 1 RT 2] RT 18]\n                 SPEED 100\n                 Home SpC [gREEN] StC [blue]\n                 REPEaT 20.1 [rEPEAT 180 [fD 1 RT 2] RT 18]\n                 UndoChunk\n                 CS REPEAT 150 [ FD [n * 2]  RT 91 ]\n                 SPEED 1 saVe [Logo04]\"))"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html",
+    "title": "Extending Claude Code",
+    "section": "",
+    "text": "Week 2 · Programming with Claude\n\n\n\n\n\nLast week you could:\n\nOpen Claude Code in a project\nAsk it to read, edit, and run code\nUse the built-in tools: Read, Edit, Bash, Grep, etc.\n\nToday: two ways to extend Claude itself.\n\n\n\n\n\n\n\nA bundle of instructions Claude can choose to load on demand.\n“Here’s how I want you to handle X.”\nLives as a markdown file on disk.\n\n\n\nA process that exposes new tools and data over a standard protocol.\n“Here are new abilities you didn’t have before.”\nLives as a running program.\n\n\n\nMantra: skills are knowledge, MCPs are capabilities.\n\n\n\n\n\n\nThe base model is generic. You are not.\nRepeated procedures → put in a skill, stop re-typing them.\nExternal systems (DBs, APIs, your editor) → MCP, stop pasting screenshots.\nLower context cost: skills load only when needed."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#skills-mcp-servers",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#skills-mcp-servers",
+    "title": "Extending Claude Code",
+    "section": "",
+    "text": "Week 2 · Programming with Claude"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#where-we-left-off",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#where-we-left-off",
+    "title": "Extending Claude Code",
+    "section": "",
+    "text": "Last week you could:\n\nOpen Claude Code in a project\nAsk it to read, edit, and run code\nUse the built-in tools: Read, Edit, Bash, Grep, etc.\n\nToday: two ways to extend Claude itself."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#two-new-vocab-words",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#two-new-vocab-words",
+    "title": "Extending Claude Code",
+    "section": "",
+    "text": "A bundle of instructions Claude can choose to load on demand.\n“Here’s how I want you to handle X.”\nLives as a markdown file on disk.\n\n\n\nA process that exposes new tools and data over a standard protocol.\n“Here are new abilities you didn’t have before.”\nLives as a running program.\n\n\n\nMantra: skills are knowledge, MCPs are capabilities."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#why-bother",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#why-bother",
+    "title": "Extending Claude Code",
+    "section": "",
+    "text": "The base model is generic. You are not.\nRepeated procedures → put in a skill, stop re-typing them.\nExternal systems (DBs, APIs, your editor) → MCP, stop pasting screenshots.\nLower context cost: skills load only when needed."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#what-is-a-skill-concretely",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#what-is-a-skill-concretely",
+    "title": "Extending Claude Code",
+    "section": "What is a skill, concretely?",
+    "text": "What is a skill, concretely?\nA folder. Inside: a SKILL.md. That’s it.\n~/.claude/skills/\n└── citation-helper/\n    ├── SKILL.md          ← required\n    └── (optional: templates, scripts, examples)\nSKILL.md has YAML frontmatter + a markdown body."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#the-minimum-skill.md",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#the-minimum-skill.md",
+    "title": "Extending Claude Code",
+    "section": "The minimum SKILL.md",
+    "text": "The minimum SKILL.md\n---\nname: citation-helper\ndescription: Convert a DOI or arXiv ID into a properly formatted\n  APA citation. Use whenever the user mentions DOI, arXiv,\n  citation, references, or bibliography.\n---\n\n# How to use this skill\n\n1. Extract the identifier from the user's message.\n2. Fetch metadata from the public Crossref API.\n3. Format as APA 7 and return *only* the citation string.\nTwo things matter for triggering: the name and the description."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#where-skills-come-from-load-order",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#where-skills-come-from-load-order",
+    "title": "Extending Claude Code",
+    "section": "Where skills come from (load order)",
+    "text": "Where skills come from (load order)\nClaude Code looks in several places. Roughly:\n\nBuilt-in skills shipped with Claude Code (e.g. init, review, security-review)\nUser-level: ~/.claude/skills/&lt;name&gt;/SKILL.md — yours, for every project\nProject-level: .claude/skills/&lt;name&gt;/SKILL.md — checked into the repo, team-shared\nPlugins: installed plugin packages can ship skills\n\nIf two skills share a name, the more specific scope wins (project &gt; user &gt; built-in)."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#how-does-claude-decide-to-use-a-skill",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#how-does-claude-decide-to-use-a-skill",
+    "title": "Extending Claude Code",
+    "section": "How does Claude decide to use a skill?",
+    "text": "How does Claude decide to use a skill?\nAt session start, Claude sees a list like:\nAvailable skills:\n- pdf: Extract text, tables, and images from PDF files...\n- citation-helper: Convert DOI or arXiv ID into APA citation...\n- skill-creator: Create new skills, modify and improve existing skills...\nJust the name + description. Not the body.\nWhen your prompt arrives, Claude matches your task against those descriptions and calls the Skill tool if one fits. The body loads then.\nThis is progressive disclosure — your context window stays cheap."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#two-ways-to-fire-a-skill",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#two-ways-to-fire-a-skill",
+    "title": "Extending Claude Code",
+    "section": "Two ways to fire a skill",
+    "text": "Two ways to fire a skill\n\n\nAuto-trigger\nYou ask: &gt; Summarize page 3 of report.pdf\nClaude sees pdf matches → loads it → uses it.\n\n\nExplicit\nYou type: &gt; /pdf extract tables from report.pdf\nAlways loads the named skill.\n\n\nThe slash form is your safety net when auto-trigger doesn’t pick the right one."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#anatomy-of-a-good-description",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#anatomy-of-a-good-description",
+    "title": "Extending Claude Code",
+    "section": "Anatomy of a good description",
+    "text": "Anatomy of a good description\nBad:\n\nHelps with documents.\n\nGood:\n\nConvert a DOI or arXiv ID into APA 7 citation. Use when the user mentions DOI, arXiv, bibliography, references, or asks to format a citation.\n\nRule of thumb: list the trigger words a user would actually say. Claude is doing fuzzy keyword matching against your description."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#exercise-a-install-drive-test-a-public-skill-20-min",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#exercise-a-install-drive-test-a-public-skill-20-min",
+    "title": "Extending Claude Code",
+    "section": "Exercise A — Install & drive-test a public skill (20 min)",
+    "text": "Exercise A — Install & drive-test a public skill (20 min)\n\nVisit github.com/anthropics/skills\nPick one of: pdf, docx, xlsx, pptx\nCopy the folder into ~/.claude/skills/\nRestart Claude Code\nTry auto-trigger: ask a natural question about the sample file in the class repo\nTry explicit: invoke with /skill-name ...\nOpen SKILL.md. Predict: would Claude trigger this for “clean up my résumé”? Why / why not?\n\n\nGAP — Pair up and exchange one finding: what surprised you? Anyone get the wrong skill to fire?"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#building-your-own-meet-skill-creator",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#building-your-own-meet-skill-creator",
+    "title": "Extending Claude Code",
+    "section": "Building your own — meet skill-creator",
+    "text": "Building your own — meet skill-creator\nAnthropic ships a meta-skill for this. Run:\n/skill-creator\nTell it what you want. It will:\n\npick a name\ndraft the description (the load-bearing part!)\nscaffold the body\nwrite the file to ~/.claude/skills/...\n\nThen you can edit it like any other file."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#mini-exercise-make-one-yourself-10-min",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#mini-exercise-make-one-yourself-10-min",
+    "title": "Extending Claude Code",
+    "section": "Mini-exercise — make one yourself (10 min)",
+    "text": "Mini-exercise — make one yourself (10 min)\nBuild a skill that automates something you already do by hand.\nExamples to seed ideas: - “Reformat my commit messages to conventional-commits style” - “Turn my lecture notes into Anki flashcards” - “Generate a uv-style pyproject.toml from a list of imports”\n\nGAP — Show your SKILL.md to a neighbor. Can they predict what task will trigger it from the description alone?"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#skills-recap",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#skills-recap",
+    "title": "Extending Claude Code",
+    "section": "Skills — recap",
+    "text": "Skills — recap\n\nA folder with SKILL.md + optional extras\nLoaded by name + description only; body is on-demand\nAuto-triggered by content match, or invoked via /name\nScope hierarchy: built-in → user → project → plugin\nThe description is the API. Spend time on it."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#the-problem-skills-cant-solve",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#the-problem-skills-cant-solve",
+    "title": "Extending Claude Code",
+    "section": "The problem skills can’t solve",
+    "text": "The problem skills can’t solve\nA skill is text. It can tell Claude what to do, but not give it new abilities.\nIf you want Claude to:\n\nQuery your PostgreSQL database\nRead your Gmail\nDrive a real browser\nRun a CAD tool\n\n…it needs code that runs. That’s MCP."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#what-is-mcp",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#what-is-mcp",
+    "title": "Extending Claude Code",
+    "section": "What is MCP?",
+    "text": "What is MCP?\nModel Context Protocol — an open standard from Anthropic for connecting LLMs to tools and data.\n\nA small JSON-RPC protocol over stdio or HTTP\nSpec: modelcontextprotocol.io\nMany clients: Claude Code, Claude Desktop, Cursor, Zed, custom apps\nMany servers: filesystem, GitHub, Slack, Postgres, Playwright, … and yours\n\nThink USB-C for LLMs: standard plug, anything can be on either end."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#what-an-mcp-server-exposes",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#what-an-mcp-server-exposes",
+    "title": "Extending Claude Code",
+    "section": "What an MCP server exposes",
+    "text": "What an MCP server exposes\nThree kinds of things:\n\n\n\n\n\n\n\n\nType\nWhat it is\nExample\n\n\n\n\nTool\nA function Claude can call\nread_file(path)\n\n\nResource\nA piece of data Claude can read\nfile:///etc/hosts\n\n\nPrompt\nA pre-canned prompt template\nsummarize_pr(pr_id)\n\n\n\nIn practice 90% of MCP value is tools."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#mental-model",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#mental-model",
+    "title": "Extending Claude Code",
+    "section": "Mental model",
+    "text": "Mental model\n┌────────────────┐   stdio/HTTP    ┌─────────────────────┐\n│  Claude Code   │ ◄────JSON-RPC──►│   MCP server        │\n│  (the client)  │                  │   (your code/binary)│\n└────────────────┘                  └─────────────────────┘\n        ▲                                     │\n        │                                     │ talks to\n        │ \"call read_file\"                    ▼\n        │ \"result: &lt;bytes&gt;\"            ┌──────────────┐\n                                       │  filesystem, │\n                                       │  GitHub API, │\n                                       │  Postgres... │\n                                       └──────────────┘\nThe server is just a process. Claude Code spawns it (stdio) or connects to it (HTTP)."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#skill-vs-mcp-pick-one",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#skill-vs-mcp-pick-one",
+    "title": "Extending Claude Code",
+    "section": "Skill vs MCP — pick one",
+    "text": "Skill vs MCP — pick one\n\n\n\n\n\n\n\n\n\nSkill\nMCP server\n\n\n\n\nLives as\nMarkdown file\nRunning process\n\n\nAdds\nInstructions, prompts\nTools, data sources\n\n\nLoaded\nOn-demand by name\nAt Claude Code startup\n\n\nImplemented in\nPlain English\nCode (any language)\n\n\nNeeds a runtime?\nNo\nYes\n\n\nGood for\n“How I do X”\n“Reach into system Y”"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#adding-an-mcp-server",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#adding-an-mcp-server",
+    "title": "Extending Claude Code",
+    "section": "Adding an MCP server",
+    "text": "Adding an MCP server\nclaude mcp add &lt;name&gt; -- &lt;command-to-run-the-server&gt;\nExample — give Claude a sandboxed filesystem:\nmkdir -p /tmp/student-sandbox\nclaude mcp add fs -- npx -y @modelcontextprotocol/server-filesystem /tmp/student-sandbox\nRestart Claude Code. Type /mcp to confirm the server is connected."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#safe-mcp-servers-to-try-in-class",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#safe-mcp-servers-to-try-in-class",
+    "title": "Extending Claude Code",
+    "section": "Safe MCP servers to try in class",
+    "text": "Safe MCP servers to try in class\nAll stdio, no accounts, no API keys:\n\n\n\n\n\n\n\n\nServer\nPurpose\nInstall\n\n\n\n\nserver-filesystem\nFile ops in one dir\nnpx -y @modelcontextprotocol/server-filesystem &lt;path&gt;\n\n\nserver-fetch\nHTTP GETs\nnpx -y @modelcontextprotocol/server-fetch\n\n\nmcp-server-time\nTimezone-aware time\nuvx mcp-server-time\n\n\nserver-sqlite\nQuery a local SQLite DB\nuvx mcp-server-sqlite --db-path ./classroom.db\n\n\ncontext7\nLive library docs\n(usually pre-installed via plugin)\n\n\n\nWe’re skipping in class: GitHub, Slack, Gmail, computer-use — they need auth or have wide blast radius."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#exercise-b-wire-up-an-mcp-10-min",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#exercise-b-wire-up-an-mcp-10-min",
+    "title": "Extending Claude Code",
+    "section": "Exercise B — Wire up an MCP (10 min)",
+    "text": "Exercise B — Wire up an MCP (10 min)\n\nPick two of the safe servers above\nInstall with claude mcp add ...\nRun /mcp — confirm both are green\nAsk Claude a question only solvable with that tool:\n\nwhat's the time in Auckland right now?\nlist files under the sandbox\nquery: SELECT count(*) FROM students;\n\nOpen ~/.claude.json (or your .mcp.json) — read the actual config you just wrote\n\n\nGAP — kill one of the server processes (pkill -f mcp-server). What does Claude say next time you ask? Recover."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#when-mcp-gets-dangerous",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#when-mcp-gets-dangerous",
+    "title": "Extending Claude Code",
+    "section": "When MCP gets dangerous",
+    "text": "When MCP gets dangerous\nThe protocol itself is fine; the server is the question.\n\nAuth scope creep: a GitHub MCP with full write access can git push --force to main.\nNetwork MCPs: a fetch server can hit any URL — including internal IPs.\nFilesystem: server-filesystem / is a terrible idea; always scope to a directory.\nComputer-use (the desktop control one): full control of your mouse/keyboard.\n\nPrinciple of least authority. Same rules as adding a Chrome extension — what is it allowed to touch?"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#where-mcp-configs-live",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#where-mcp-configs-live",
+    "title": "Extending Claude Code",
+    "section": "Where MCP configs live",
+    "text": "Where MCP configs live\n\nUser-wide: ~/.claude.json — applies to every Claude Code session\nProject-wide: .mcp.json at repo root — shared with teammates via git\nThe claude mcp add CLI just edits these files for you\n\nA repo can pin its required MCPs. New contributors run claude mcp install and they’re up."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#building-your-own-mcp-server",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#building-your-own-mcp-server",
+    "title": "Extending Claude Code",
+    "section": "Building your own MCP server",
+    "text": "Building your own MCP server\nTwo easy starting points:\n\nThe official skill mcp-builder — scaffolds a server from a spec.\nnpm create mcp-server or uv + mcp Python SDK.\n\nServer skeleton (Python):\nfrom mcp.server.fastmcp import FastMCP\nmcp = FastMCP(\"my-toy\")\n\n@mcp.tool()\ndef add(a: int, b: int) -&gt; int:\n    return a + b\n\nmcp.run()\nThat’s a working MCP server. claude mcp add toy -- python my_server.py and you can call add from Claude."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#recap-skills-vs-mcp",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#recap-skills-vs-mcp",
+    "title": "Extending Claude Code",
+    "section": "Recap — Skills vs MCP",
+    "text": "Recap — Skills vs MCP\n\n\nReach for a skill when…\n\nthe answer is instructions\nyou want it triggered by topic\nyou want it on-demand & cheap\nit’s shareable as a file\n\n\n\nReach for an MCP when…\n\nyou need new tools\nyou need to talk to a running system\nyou have code that already does the thing\nyou want it available every session"
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#homework",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#homework",
+    "title": "Extending Claude Code",
+    "section": "Homework",
+    "text": "Homework\n\nOne skill. Automate something you actually did this week. ≤ 30 lines of body.\nOne MCP. Add a server beyond the ones we tried in class. Write a paragraph: what new tasks does it unlock and what risks does it bring?\nSubmit both as a PR to your fork of the class repo.\n\nDue: next week’s session."
+  },
+  {
+    "objectID": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#resources",
+    "href": "lecture-materials/claude-skills-and-mcp/slides-marp-source.html#resources",
+    "title": "Extending Claude Code",
+    "section": "Resources",
+    "text": "Resources\n\nSkills repo: github.com/anthropics/skills\nMCP spec: modelcontextprotocol.io\nMCP server registry: github.com/modelcontextprotocol/servers\nClaude Code docs: docs.claude.com/claude-code\nOffice hours: Thursdays after class\n\n\nGAP — open Q&A"
   }
 ]

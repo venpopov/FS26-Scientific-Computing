@@ -6,6 +6,7 @@
   {
     "listing": "/slides.html",
     "items": [
+      "/slides/claude-skills-and-mcp.html",
       "/slides/week1.html",
       "/slides/week3.html"
     ]
