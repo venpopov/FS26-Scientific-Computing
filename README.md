@@ -23,4 +23,4 @@ The skills developed in this course will lay the groundwork for more advanced co
 - Be able to create reproducible software projects in R
 - Understand absolute and relative filepaths and how to organize software projects and code
 - Be able to use if/else statements, for/while statements, and write custom functions in R
-- Understand how to store data and access data in different data structures such as vectors, lists, data.frames. matrices and so on
+- Understand how to store data and access data in different data structures such as vectors, lists, data.frames. matrices and so on.
